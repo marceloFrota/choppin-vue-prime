@@ -34,6 +34,11 @@ const router = createRouter({
                     name: 'choppinorderdetails',
                     component: () => import('@/views/choppin/OrderDetails.vue')
                 },
+                {
+                    path: '/choppin/formpartner',
+                    name: 'choppinformpartner',
+                    component: () => import('@/views/choppin/FormPartner.vue')
+                },
   
                 {
                     path: '/uikit/formlayout',

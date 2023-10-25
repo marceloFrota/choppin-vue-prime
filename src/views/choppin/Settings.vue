@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue';
+import { useToast } from 'primevue/usetoast';
+
 
 const dropdownItems = ref([
     { name: 'Option 1', code: 'Option 1' },
@@ -25,6 +27,13 @@ const multiselectValue = ref(null);
 const dropdownItem = ref(null);
 const colorValue = ref('#1976D2');
 const switchValue = ref(false);
+
+const toast = useToast();
+
+
+const showSuccess = () => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Detail', life: 3000 });
+};
 </script>
 
 <template>
@@ -33,7 +42,7 @@ const switchValue = ref(false);
             <div class="card">
        <h5>Minha Loja</h5>
                     
-
+       <Toast />
                 <div class="p-fluid formgrid grid">
                     <div class="field col-12 md:col-6">
                         <label for="firstname2">Nome</label>
@@ -63,7 +72,7 @@ const switchValue = ref(false);
                         <h5>Cor da Loja</h5>
                         <ColorPicker style="width: 2rem" v-model="colorValue" />
                     </div>
-                    <Button label="Salvar"></Button>
+                    <Button   @click="showSuccess()" label="Salvar"></Button>
                 </div>
             </div>
         </div>
@@ -82,7 +91,7 @@ const switchValue = ref(false);
                     <label for="age1">CNPJ</label>
                     <InputText id="age1" type="text" />
                 </div>
-                <Button label="Salvar"></Button>
+                <Button  @click="showSuccess()" label="Salvar"></Button>
             </div>
 
             <div class="card p-fluid">
@@ -96,7 +105,7 @@ const switchValue = ref(false);
                     <InputText id="email1" type="text" />
                 </div>
 
-                <Button label="Salvar"></Button>
+                <Button  @click="showSuccess()" label="Salvar"></Button>
             </div>
         </div>
 
@@ -112,7 +121,7 @@ const switchValue = ref(false);
                     <Password id="password1" v-model="password" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
                 </div>
 
-                <Button label="Salvar"></Button>
+                <Button   @click="showSuccess()" label="Salvar"></Button>
             </div>
 
             <div class="card p-fluid">
@@ -137,7 +146,7 @@ const switchValue = ref(false);
                         </template>
                     </MultiSelect>
                 </div>
-                <Button label="Salvar"></Button>
+                <Button  @click="showSuccess()" label="Salvar"></Button>
             </div>
         </div>
     </div>
