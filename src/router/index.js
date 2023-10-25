@@ -13,6 +13,28 @@ const router = createRouter({
                     name: 'dashboard',
                     component: () => import('@/views/Dashboard.vue')
                 },
+                
+                {
+                    path: '/choppin/settings',
+                    name: 'choppinsettings',
+                    component: () => import('@/views/choppin/Settings.vue')
+                },
+                {
+                    path: '/choppin/catalog',
+                    name: 'choppincatalog',
+                    component: () => import('@/views/choppin/Catalog.vue')
+                },
+                {
+                    path: '/choppin/orders',
+                    name: 'choppinorders',
+                    component: () => import('@/views/choppin/Orders.vue')
+                },
+                {
+                    path: '/choppin/orderdetails',
+                    name: 'choppinorderdetails',
+                    component: () => import('@/views/choppin/OrderDetails.vue')
+                },
+  
                 {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
