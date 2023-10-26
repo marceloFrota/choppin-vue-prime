@@ -35,11 +35,10 @@ const router = createRouter({
                     component: () => import('@/views/choppin/OrderDetails.vue')
                 },
                 {
-                    path: '/choppin/formpartner',
-                    name: 'choppinformpartner',
-                    component: () => import('@/views/choppin/FormPartner.vue')
+                    path: '/choppin/partner',
+                    name: 'choppinpartner',
+                    component: () => import('@/components/partner/CrudModal.vue')
                 },
-  
                 {
                     path: '/uikit/formlayout',
                     name: 'formlayout',

@@ -7,6 +7,9 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig(() => {
     return {
         plugins: [vue()],
+        define: {
+            BASE_API_URL: "'https://laravel.fastapp.cloud/choppin'"
+          },
         resolve: {
             alias: {
                 '@': fileURLToPath(new URL('./src', import.meta.url))

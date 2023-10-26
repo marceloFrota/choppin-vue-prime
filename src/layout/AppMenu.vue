@@ -22,11 +22,7 @@ const model = ref([
     {
         label: 'Parceiro',
         items: [
-            { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' },
-            { label: 'Meu Catálogo', icon: 'pi pi-fw pi-id-card', to: '/choppin/catalog' },
-            { label: 'Meus Pedidos', icon: 'pi pi-fw pi-id-card', to: '/choppin/orders' },
-            { label: 'Meu Perfil', icon: 'pi pi-fw pi-id-card', to: '/choppin/settings' },
-            { label: 'Form Partner', icon: 'pi pi-fw pi-id-card', to: '/choppin/formpartner' },
+            { label: 'CRUD Partner', icon: 'pi pi-fw pi-id-card', to: '/choppin/partner' },
 
         ]
     },
