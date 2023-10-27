@@ -2,7 +2,7 @@
     <div>
         <h5>Cadastro de Parceiros</h5>
         <div class="grid p-fluid">
-            <Form class="col-12" :validation-schema="validationSchema_partner" @submit="onSubmit">
+            <Form class="col-12" :validation-schema="validationSchema_partner" @submit.capture="onSubmit">
                 <div class="field">
                     <Field id="name" name="name" v-slot="{ handleChange, handleBlur }">
                         <label for="name">Nome</label>
@@ -130,7 +130,7 @@
                 </div>
                 {{ valid }}
                 <input type="submit" class="p-button" value="Salvar" />
-                <Button label="Salvar" @click="onSubmit" />
+                <!-- <Button label="Salvar" @click="onSubmit" /> -->
             </Form>
         </div>
     </div>
@@ -144,6 +144,8 @@ import { setLocale } from '@vee-validate/i18n';
 import * as zod from 'zod';
 import { toTypedSchema } from '@vee-validate/zod';
 
+const { errors } = useForm();
+
 export default {
     name: 'Form_partner',
     data() {
@@ -151,23 +153,23 @@ export default {
             isLoading: false,
             action: 'POST',
             partner: {
-                id: null,
-                created_at: null,
-                updated_at: null,
-                name: null,
-                email: null,
-                phone_number: null,
-                doc_cpf: null,
-                date_of_birth: null,
-                address_line_1: null,
-                address_line_2: null,
-                city: null,
-                country: null,
-                state: null,
-                zip_code: null,
-                logo: null,
-                active: null,
-                operating_hours: null
+                id: '',
+                created_at: '',
+                updated_at: '',
+                name: '',
+                email: '',
+                phone_number: '',
+                doc_cpf: '',
+                date_of_birth: '',
+                address_line_1: '',
+                address_line_2: '',
+                city: '',
+                country: '',
+                state: '',
+                zip_code: '',
+                logo: '',
+                active: '',
+                operating_hours: ''
             }
         };
     },
@@ -176,8 +178,8 @@ export default {
     },
     components: { Field, Form, ErrorMessage },
     computed: {
-        async valid() {
-            const validationErrors = await validate(this.partner, this.validationSchema_partner);
+        valid() {
+            const validationErrors = validate(this.partner, this.validationSchema_partner);
             return validationErrors;
         }
     },
@@ -204,15 +206,34 @@ export default {
                     this.isLoading = false;
                 });
         },
-        onSubmit(values) {
-            const validationErrors = validate(this.partner, this.validationSchema_partner).then((result) => {
-                console.log('validation->>', result);
-                if (result.valid) {
-                    // Do something
+        findFirstErrorField(errors) {
+            // Loop through the fields and find the first one with an error
+            for (const fieldName in errors) {
+                if (this.$refs[fieldName]) {
+                    const fieldElement = this.$refs[fieldName][0].$el; // Access the field's DOM element
+                    console.log('Scrolling to:', fieldName, fieldElement);
+                    return fieldElement;
                 }
-            });
+            }
+            return null;
+        },
+        async onSubmit() {
+            // Validate the form data
+            const validationErrors = await validate(this.partner, this.validationSchema_partner);
 
-            this.save();
+            if (validationErrors.valid) {
+                // Form data is valid, proceed to save
+                this.save();
+            } else {
+                // Handle validation errors
+                console.log('Validation errors:', validationErrors);
+
+                // Scroll to the first field with an error
+                const firstErrorField = this.findFirstErrorField(validationErrors.errors);
+                if (firstErrorField) {
+                    firstErrorField.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         }
     },
     setup() {
