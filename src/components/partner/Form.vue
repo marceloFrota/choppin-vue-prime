@@ -130,6 +130,7 @@
                 </div>
                 {{ valid }}
                 <input type="submit" class="p-button" value="Salvar" />
+                <Button label="Salvar" @click="onSubmit" />
             </Form>
         </div>
     </div>
@@ -175,8 +176,8 @@ export default {
     },
     components: { Field, Form, ErrorMessage },
     computed: {
-        valid() {
-            const validationErrors = validate(this.partner, this.validationSchema_partner);
+        async valid() {
+            const validationErrors = await validate(this.partner, this.validationSchema_partner);
             return validationErrors;
         }
     },
