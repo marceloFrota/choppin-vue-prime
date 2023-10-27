@@ -128,8 +128,8 @@
                         <ErrorMessage name="operating_hours" />
                     </Field>
                 </div>
-
-                <Button type="submit" label="Salvar"></Button>
+                {{ valid }}
+                <input type="submit" class="p-button" value="Salvar"/>
             </Form>
         </div>
     </div>
@@ -137,7 +137,9 @@
 
 <script>
 //import { useAppStore } from "@/store/store.js";
-import { useForm, Field, Form, ErrorMessage, configure } from 'vee-validate';
+import axios from 'axios';
+import { useForm, Field, Form, ErrorMessage, configure, validate } from 'vee-validate';
+import { setLocale } from '@vee-validate/i18n';
 import * as zod from 'zod';
 import { toTypedSchema } from '@vee-validate/zod';
 
@@ -172,24 +174,43 @@ export default {
         record: Object
     },
     components: { Field, Form, ErrorMessage },
-    computed: {},
+    computed: {
+        valid(){
+            const validationErrors = validate(this.partner, this.validationSchema_partner);
+            return validationErrors;
+        }
+    },
     methods: {
         async save() {
+            
             this.isLoading = true;
             if (this.action == 'PATCH') {
-                BASE_API_URL = BASE_API_URL + '/' + this.id;
+                BASE_API_URL = BASE_API_URL + '/partner/' + this.id;
             }
             const config = {
                 method: this.action,
                 url: `${BASE_API_URL}/partner`,
                 data: this.partner
             };
-            const response = await axios(config);
+            await axios(config).then(response => {
+                console.log(response);
+                this.$emit('saved');
+            }).catch(error => {
+                console.error(error);
+            }).finally(() => {
+                this.isLoading = false;
+            });
         },
         onSubmit(values) {
-            this.$emit('saved');
-
-            this.save(values);
+            const validationErrors = validate(this.partner, this.validationSchema_partner).then(result => {
+                console.log("validation->>",result);
+                if (result.valid) {
+                    // Do something
+                }
+                });
+            
+            this.save();
+            
         }
     },
     setup() {

@@ -8,6 +8,7 @@
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
     },
     "dependencies": {
+        "@vee-validate/i18n": "^4.11.8",
         "@vee-validate/zod": "^4.11.8",
         "axios": "^1.5.1",
         "chart.js": "3.3.2",
