@@ -1,3 +1,37 @@
+<template>
+    <div class="card">
+        <Toolbar class="mb-4">
+            <template v-slot:start>
+                <div class="my-2">
+                    <Button label="Novo" icon="pi pi-plus" class="p-button-success mr-2" @click="create" />
+                </div>
+            </template>
+        </Toolbar>
+        <DataTable_partner :data="partner_data" @remove="remove"></DataTable_partner>
+        <Toast />
+
+        <Dialog v-model:visible="dialog" :style="{ width: '450px' }" :header="modalTitle" :modal="true">
+            <div class="flex align-items-center justify-content-center">
+                <Form_partner @saved="onSaved"></Form_partner>
+            </div>
+            <template #footer> </template>
+        </Dialog>
+        <Dialog v-model:visible="deletetDialog" :style="{ width: '450px' }" header="Confirmar" :modal="true">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span v-if="partner"
+                    >Tem certeza que quer excluir <b>{{ partner.name }}</b
+                    >?</span
+                >
+            </div>
+            <template #footer>
+                <Button label="Não" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false" />
+                <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
+            </template>
+        </Dialog>
+    </div>
+</template>
+
 <script>
 import { useAppStore } from '@/store/store.js';
 import DataTable_partner from '../../components/partner/DataTable.vue';
@@ -51,37 +85,3 @@ export default {
     }
 };
 </script>
-
-<template>
-    <div class="card">
-        <Toolbar class="mb-4">
-            <template v-slot:start>
-                <div class="my-2">
-                    <Button label="Novo" icon="pi pi-plus" class="p-button-success mr-2" @click="create" />
-                </div>
-            </template>
-        </Toolbar>
-        <DataTable_partner :data="partner_data" @remove="remove"></DataTable_partner>
-        <Toast />
-
-        <Dialog v-model:visible="dialog" :style="{ width: '450px' }" :header="modalTitle" :modal="true">
-            <div class="flex align-items-center justify-content-center">
-                <Form_partner @saved="onSaved"></Form_partner>
-            </div>
-            <template #footer> </template>
-        </Dialog>
-        <Dialog v-model:visible="deletetDialog" :style="{ width: '450px' }" header="Confirmar" :modal="true">
-            <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                <span v-if="partner"
-                    >Tem certeza que quer excluir <b>{{ partner.name }}</b
-                    >?</span
-                >
-            </div>
-            <template #footer>
-                <Button label="Não" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false" />
-                <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
-            </template>
-        </Dialog>
-    </div>
-</template>

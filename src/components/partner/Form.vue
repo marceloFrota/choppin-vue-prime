@@ -1,116 +1,3 @@
-<script>
-//import { useAppStore } from "@/store/store.js";
-import axios from 'axios';
-import { useForm, Field, Form, ErrorMessage, configure, validate } from 'vee-validate';
-import { setLocale } from '@vee-validate/i18n';
-import * as zod from 'zod';
-import { toTypedSchema } from '@vee-validate/zod';
-
-export default {
-    name: 'Form_partner',
-    data() {
-        return {
-            isLoading: false,
-            action: 'POST',
-            partner: {
-                id: null,
-                created_at: null,
-                updated_at: null,
-                name: null,
-                email: null,
-                phone_number: null,
-                doc_cpf: null,
-                date_of_birth: null,
-                address_line_1: null,
-                address_line_2: null,
-                city: null,
-                country: null,
-                state: null,
-                zip_code: null,
-                logo: null,
-                active: null,
-                operating_hours: null
-            }
-        };
-    },
-    props: {
-        record: Object
-    },
-    components: { Field, Form, ErrorMessage },
-    computed: {
-        valid() {
-            const validationErrors = validate(this.partner, this.validationSchema_partner);
-            return validationErrors;
-        }
-    },
-    methods: {
-        async save() {
-            this.isLoading = true;
-            if (this.action == 'PATCH') {
-                BASE_API_URL = BASE_API_URL + '/partner/' + this.id;
-            }
-            const config = {
-                method: this.action,
-                url: `${BASE_API_URL}/partner`,
-                data: this.partner
-            };
-            await axios(config)
-                .then((response) => {
-                    console.log(response);
-                    this.$emit('saved');
-                })
-                .catch((error) => {
-                    console.error(error);
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                });
-        },
-        onSubmit(values) {
-            const validationErrors = validate(this.partner, this.validationSchema_partner).then((result) => {
-                console.log('validation->>', result);
-                if (result.valid) {
-                    // Do something
-                }
-            });
-
-            this.save();
-        }
-    },
-    setup() {
-        configure({
-            validateOnBlur: true,
-            validateOnChange: true,
-            validateOnInput: false,
-            validateOnModelUpdate: true
-        });
-
-        const validationSchema_partner = toTypedSchema(
-            zod.object({
-                name: zod.string().min(1),
-                email: zod.string().email().min(1),
-                phone_number: zod.string().optional(),
-                doc_cpf: zod.string().optional(),
-                date_of_birth: zod.string().optional(),
-                address_line_1: zod.string().optional(),
-                address_line_2: zod.string().optional(),
-                city: zod.string().optional(),
-                country: zod.string().optional(),
-                state: zod.string().optional(),
-                zip_code: zod.string().optional(),
-                logo: zod.string().optional(),
-                active: zod.boolean().optional(),
-                operating_hours: zod.string().optional()
-            })
-        );
-
-        return {
-            validationSchema_partner
-        };
-    }
-};
-</script>
-
 <template>
     <div>
         <h5>Cadastro de Parceiros</h5>
@@ -247,3 +134,116 @@ export default {
         </div>
     </div>
 </template>
+
+<script>
+//import { useAppStore } from "@/store/store.js";
+import axios from 'axios';
+import { useForm, Field, Form, ErrorMessage, configure, validate } from 'vee-validate';
+import { setLocale } from '@vee-validate/i18n';
+import * as zod from 'zod';
+import { toTypedSchema } from '@vee-validate/zod';
+
+export default {
+    name: 'Form_partner',
+    data() {
+        return {
+            isLoading: false,
+            action: 'POST',
+            partner: {
+                id: null,
+                created_at: null,
+                updated_at: null,
+                name: null,
+                email: null,
+                phone_number: null,
+                doc_cpf: null,
+                date_of_birth: null,
+                address_line_1: null,
+                address_line_2: null,
+                city: null,
+                country: null,
+                state: null,
+                zip_code: null,
+                logo: null,
+                active: null,
+                operating_hours: null
+            }
+        };
+    },
+    props: {
+        record: Object
+    },
+    components: { Field, Form, ErrorMessage },
+    computed: {
+        valid() {
+            const validationErrors = validate(this.partner, this.validationSchema_partner);
+            return validationErrors;
+        }
+    },
+    methods: {
+        async save() {
+            this.isLoading = true;
+            if (this.action == 'PATCH') {
+                BASE_API_URL = BASE_API_URL + '/partner/' + this.id;
+            }
+            const config = {
+                method: this.action,
+                url: `${BASE_API_URL}/partner`,
+                data: this.partner
+            };
+            await axios(config)
+                .then((response) => {
+                    console.log(response);
+                    this.$emit('saved');
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                });
+        },
+        onSubmit(values) {
+            const validationErrors = validate(this.partner, this.validationSchema_partner).then((result) => {
+                console.log('validation->>', result);
+                if (result.valid) {
+                    // Do something
+                }
+            });
+
+            this.save();
+        }
+    },
+    setup() {
+        configure({
+            validateOnBlur: true,
+            validateOnChange: true,
+            validateOnInput: false,
+            validateOnModelUpdate: true
+        });
+
+        const validationSchema_partner = toTypedSchema(
+            zod.object({
+                name: zod.string().min(1),
+                email: zod.string().email().min(1),
+                phone_number: zod.string().optional(),
+                doc_cpf: zod.string().optional(),
+                date_of_birth: zod.string().optional(),
+                address_line_1: zod.string().optional(),
+                address_line_2: zod.string().optional(),
+                city: zod.string().optional(),
+                country: zod.string().optional(),
+                state: zod.string().optional(),
+                zip_code: zod.string().optional(),
+                logo: zod.string().optional(),
+                active: zod.boolean().optional(),
+                operating_hours: zod.string().optional()
+            })
+        );
+
+        return {
+            validationSchema_partner
+        };
+    }
+};
+</script>
