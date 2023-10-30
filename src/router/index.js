@@ -41,7 +41,7 @@ const router = createRouter({
                 },
                 {
                     path: '/choppin/product',
-                    name: 'choppinpartner',
+                    name: 'choppinproduct',
                     component: () => import('@/views/choppin/Products.vue')
                 },
                 {

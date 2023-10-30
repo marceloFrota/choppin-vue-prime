@@ -7,7 +7,7 @@
                 </div>
             </template>
         </Toolbar>
-        <DataTable_partner :data="partner_data" @remove="remove" @edit="edit"></DataTable_partner>
+        <DataTable_partner :data="partner_data" @remove="handleRemove" @edit="edit"></DataTable_partner>
         <Toast />
 
         <Dialog v-model:visible="dialog" :style="{ width: '450px' }" :header="modalTitle" :modal="true">
@@ -16,7 +16,7 @@
             </div>
             <template #footer> </template>
         </Dialog>
-        <Dialog v-model:visible="deletetDialog" :style="{ width: '450px' }" header="Confirmar" :modal="true">
+        <Dialog v-model:visible="deleteDialog" :style="{ width: '450px' }" header="Confirmar" :modal="true">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                 <span v-if="partner"
@@ -25,8 +25,8 @@
                 >
             </div>
             <template #footer>
-                <Button label="Não" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false" />
-                <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
+                <Button label="Não" icon="pi pi-times" class="p-button-text" @click="deleteDialog = false" />
+                <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="remove(partner.id)" />
             </template>
         </Dialog>
     </div>
@@ -43,7 +43,7 @@ export default {
         return {
             dialog: false,
             objectLabel: 'Parceiro',
-            deletetDialog: false,
+            deleteDialog: false,
             modalTitle: '',
             partner: null,
             toast: useToast()
@@ -76,13 +76,16 @@ export default {
             this.partner = value;
 
         },
-        remove(value) {
-            this.deletetDialog = true;
+        remove(id){
+            // logica do remove
+        },
+        handleRemove(value) {
+            this.deleteDialog = true;
             this.modalTitle = `Deletar ${this.objectLabel}`;
             this.partner = value;
         },
         onSaved() {
-            this.toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Parceiro Cadastrado', life: 3000 });
+            this.toast.add({ severity: 'success', summary: 'Sucesso', detail: `Cadastro de ${this.objectLabel} realizado com sucesso!`, life: 3000 });
             this.dialog = false;
         }
     }
