@@ -2,8 +2,11 @@
 import { onMounted, reactive, ref, watch } from 'vue';
 import ProductService from '@/service/ProductService';
 import { useLayout } from '@/layout/composables/layout';
+import { useAppStore } from "@/store/store.js";
+
 
 const { isDarkTheme } = useLayout();
+
 
 const products = ref(null);
 const lineData = reactive({
@@ -34,8 +37,14 @@ const items = ref([
 const lineOptions = ref(null);
 const productService = new ProductService();
 
+const store = useAppStore();
+
 onMounted(() => {
     productService.getProductsSmall().then((data) => (products.value = data));
+
+    store.get_product();
+
+
 });
 
 const formatCurrency = (value) => {
