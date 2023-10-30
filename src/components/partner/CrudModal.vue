@@ -79,7 +79,7 @@ export default {
             this.partner = value;
         },
         onSaved() {
-            this.toast.add({ severity: 'success', summary: 'Successful', detail: 'Parceiro Cadastrado', life: 3000 });
+            this.toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Parceiro Cadastrado', life: 3000 });
             this.dialog = false;
         }
     }
