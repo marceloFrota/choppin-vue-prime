@@ -112,7 +112,7 @@
         </Column>
     <Column frozen alignFrozen="right" headerStyle="min-width:10rem;">
         <template #body="slotProps">
-            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-1" @click="editProduct(slotProps.data)" />
+            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-1" @click="edit(slotProps.data)" />
             <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1" @click="remove(slotProps.data)" />
         </template>
     </Column>

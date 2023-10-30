@@ -169,6 +169,11 @@ export default {
     props: {
         record: Object
     },
+    mounted() {
+        if (this.record) {
+            this.partner = this.record;
+        }
+    },
     components: { Field, Form, ErrorMessage },
     computed: {},
     methods: {

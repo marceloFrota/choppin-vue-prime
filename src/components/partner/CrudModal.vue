@@ -7,12 +7,12 @@
                 </div>
             </template>
         </Toolbar>
-        <DataTable_partner :data="partner_data" @remove="remove"></DataTable_partner>
+        <DataTable_partner :data="partner_data" @remove="remove" @edit="edit"></DataTable_partner>
         <Toast />
 
         <Dialog v-model:visible="dialog" :style="{ width: '450px' }" :header="modalTitle" :modal="true">
             <div class="flex align-items-center justify-content-center">
-                <Form_partner @saved="onSaved"></Form_partner>
+                <Form_partner :record="partner" @saved="onSaved"></Form_partner>
             </div>
             <template #footer> </template>
         </Dialog>
@@ -45,7 +45,7 @@ export default {
             objectLabel: 'Parceiro',
             deletetDialog: false,
             modalTitle: '',
-            partner: {},
+            partner: null,
             toast: useToast()
         };
     },
@@ -68,10 +68,13 @@ export default {
         create() {
             this.dialog = true;
             this.modalTitle = `Cadastrar ${this.objectLabel}`;
+            this.partner =null
         },
-        edit() {
+        edit(value) {
             this.dialog = true;
             this.modalTitle = `Editar ${this.objectLabel}`;
+            this.partner = value;
+
         },
         remove(value) {
             this.deletetDialog = true;
