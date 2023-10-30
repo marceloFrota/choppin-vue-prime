@@ -43,6 +43,10 @@ onMounted(() => {
     productService.getProductsSmall().then((data) => (products.value = data));
 
     store.get_product();
+    store.get_product_category();
+    store.get_order();
+    store.get_customer();
+    store.get_product_subcategory();
 
 
 });

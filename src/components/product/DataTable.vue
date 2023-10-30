@@ -53,18 +53,18 @@
         <Column sortable field="id_product_category" header="Categoria">
             <template #body="slotProps">
                 <span class="p-column-title">Categoria</span>
-                {{ slotProps.data.id_product_category }}
+                {{ slotProps.data.id_product_category_data ? slotProps.data.id_product_category_data.name : '-' }}
             </template>
         </Column>
         <Column sortable field="id_product_subcategory" header="Subcategoria">
             <template #body="slotProps">
                 <span class="p-column-title">Subcategoria</span>
-                {{ slotProps.data.id_product_subcategory }}
+                {{ slotProps.data.id_product_subcategory_data ? slotProps.data.id_product_subcategory_data.name : '-' }}
             </template>
         </Column>
     <Column frozen alignFrozen="right" headerStyle="min-width:10rem;">
         <template #body="slotProps">
-            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-1" @click="editProduct(slotProps.data)" />
+            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-1" @click="edit(slotProps.data)" />
             <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1" @click="remove(slotProps.data)" />
         </template>
     </Column>

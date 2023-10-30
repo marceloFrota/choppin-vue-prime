@@ -170,9 +170,10 @@ export default {
         record: Object
     },
     mounted() {
-        if (this.record) {
-            this.partner = this.record;
+        if(this.record){
+            this.applyRecord()
         }
+
     },
     components: { Field, Form, ErrorMessage },
     computed: {},
@@ -198,6 +199,13 @@ export default {
                 .finally(() => {
                     this.isLoading = false;
                 });
+        },
+
+        applyRecord(){
+           
+            this.partner = this.record;
+    
+            
         },
         scrollToElement(id) {
             this.$nextTick(() => {
