@@ -1,14 +1,13 @@
 <template>
     <div>
         <h5>Cadastro de Parceiros</h5>
-        <div class="grid p-fluid">
+        <div ref="form" class="grid p-fluid">
             <Form class="col-12" :validation-schema="validationSchema_partner" @submit.capture="onSubmit">
                 <div class="field">
                     <Field id="name" name="name" v-slot="{ handleChange, handleBlur }">
                         <label for="name">Nome</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.name" class="input" />
-
-                        <ErrorMessage name="name" />
+                        <ErrorMessage class="p-error" name="name" />
                     </Field>
                 </div>
 
@@ -16,8 +15,7 @@
                     <Field id="email" name="email" v-slot="{ handleChange, handleBlur }">
                         <label for="email">Email</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.email" class="input" />
-
-                        <ErrorMessage name="email" />
+                        <ErrorMessage class="p-error" name="email" />
                     </Field>
                 </div>
 
@@ -26,7 +24,7 @@
                         <label for="phone_number">Número de telefone</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.phone_number" class="input" />
 
-                        <ErrorMessage name="phone_number" />
+                        <ErrorMessage class="p-error" name="phone_number" />
                     </Field>
                 </div>
 
@@ -35,7 +33,7 @@
                         <label for="doc_cpf">CPF</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.doc_cpf" class="input" />
 
-                        <ErrorMessage name="doc_cpf" />
+                        <ErrorMessage class="p-error" name="doc_cpf" />
                     </Field>
                 </div>
 
@@ -44,7 +42,7 @@
                         <label for="date_of_birth">Data de Nascimento</label>
                         <InputText type="date" @change="handleChange" @blur="handleBlur" v-model="partner.date_of_birth" class="input" />
 
-                        <ErrorMessage name="date_of_birth" />
+                        <ErrorMessage class="p-error" name="date_of_birth" />
                     </Field>
                 </div>
 
@@ -53,7 +51,7 @@
                         <label for="address_line_1">Endereço linha 1</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.address_line_1" class="input" />
 
-                        <ErrorMessage name="address_line_1" />
+                        <ErrorMessage class="p-error" name="address_line_1" />
                     </Field>
                 </div>
 
@@ -62,7 +60,7 @@
                         <label for="address_line_2">Endereço linha 2</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.address_line_2" class="input" />
 
-                        <ErrorMessage name="address_line_2" />
+                        <ErrorMessage class="p-error" name="address_line_2" />
                     </Field>
                 </div>
 
@@ -71,7 +69,7 @@
                         <label for="city">Cidade</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.city" class="input" />
 
-                        <ErrorMessage name="city" />
+                        <ErrorMessage class="p-error" name="city" />
                     </Field>
                 </div>
 
@@ -80,7 +78,7 @@
                         <label for="country">País</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.country" class="input" />
 
-                        <ErrorMessage name="country" />
+                        <ErrorMessage class="p-error" name="country" />
                     </Field>
                 </div>
 
@@ -89,7 +87,7 @@
                         <label for="state">Estado</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.state" class="input" />
 
-                        <ErrorMessage name="state" />
+                        <ErrorMessage class="p-error" name="state" />
                     </Field>
                 </div>
 
@@ -98,7 +96,7 @@
                         <label for="zip_code">CEP</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.zip_code" class="input" />
 
-                        <ErrorMessage name="zip_code" />
+                        <ErrorMessage class="p-error" name="zip_code" />
                     </Field>
                 </div>
 
@@ -107,7 +105,7 @@
                         <label for="logo">Logo</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.logo" class="input" />
 
-                        <ErrorMessage name="logo" />
+                        <ErrorMessage class="p-error" name="logo" />
                     </Field>
                 </div>
 
@@ -116,7 +114,7 @@
                         <label for="active">Ativo</label>
                         <InputText type="checkbox" @change="handleChange" @blur="handleBlur" v-model="partner.active" class="input" />
 
-                        <ErrorMessage name="active" />
+                        <ErrorMessage class="p-error" name="active" />
                     </Field>
                 </div>
 
@@ -125,12 +123,10 @@
                         <label for="operating_hours">Horário de funcionamento</label>
                         <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="partner.operating_hours" class="input" />
 
-                        <ErrorMessage name="operating_hours" />
+                        <ErrorMessage class="p-error" name="operating_hours" />
                     </Field>
                 </div>
-                {{ valid }}
                 <input type="submit" class="p-button" value="Salvar" />
-                <!-- <Button label="Salvar" @click="onSubmit" /> -->
             </Form>
         </div>
     </div>
@@ -140,11 +136,8 @@
 //import { useAppStore } from "@/store/store.js";
 import axios from 'axios';
 import { useForm, Field, Form, ErrorMessage, configure, validate } from 'vee-validate';
-import { setLocale } from '@vee-validate/i18n';
 import * as zod from 'zod';
 import { toTypedSchema } from '@vee-validate/zod';
-
-const { errors } = useForm();
 
 export default {
     name: 'Form_partner',
@@ -177,12 +170,7 @@ export default {
         record: Object
     },
     components: { Field, Form, ErrorMessage },
-    computed: {
-        valid() {
-            const validationErrors = validate(this.partner, this.validationSchema_partner);
-            return validationErrors;
-        }
-    },
+    computed: {},
     methods: {
         async save() {
             this.isLoading = true;
@@ -206,33 +194,20 @@ export default {
                     this.isLoading = false;
                 });
         },
-        findFirstErrorField(errors) {
-            // Loop through the fields and find the first one with an error
-            for (const fieldName in errors) {
-                if (this.$refs[fieldName]) {
-                    const fieldElement = this.$refs[fieldName][0].$el; // Access the field's DOM element
-                    console.log('Scrolling to:', fieldName, fieldElement);
-                    return fieldElement;
+        scrollToElement(id) {
+            this.$nextTick(() => {
+                const element = this.$refs[id];
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
                 }
-            }
-            return null;
+            });
         },
         async onSubmit() {
-            // Validate the form data
             const validationErrors = await validate(this.partner, this.validationSchema_partner);
-
             if (validationErrors.valid) {
-                // Form data is valid, proceed to save
                 this.save();
             } else {
-                // Handle validation errors
-                console.log('Validation errors:', validationErrors);
-
-                // Scroll to the first field with an error
-                const firstErrorField = this.findFirstErrorField(validationErrors.errors);
-                if (firstErrorField) {
-                    firstErrorField.scrollIntoView({ behavior: 'smooth' });
-                }
+                this.scrollToElement('form');
             }
         }
     },
@@ -262,9 +237,10 @@ export default {
                 operating_hours: zod.string().optional()
             })
         );
-
+        const { errors } = useForm({ validationSchema_partner });
         return {
-            validationSchema_partner
+            validationSchema_partner,
+            errors
         };
     }
 };
