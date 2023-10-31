@@ -45,6 +45,16 @@ const router = createRouter({
                     component: () => import('@/components/product/CrudModal.vue')
                 },
                 {
+                    path: '/choppin/fileuploadsimple',
+                    name: 'choppinfileuploadsimple',
+                    component: () => import('@/components/shared/FileUploadSimple.vue')
+                },
+                {
+                    path: '/choppin/fileuploadmultiple',
+                    name: 'choppinfileuploadmultiple',
+                    component: () => import('@/components/shared/FileUploadMultiple.vue')
+                },
+                {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
                     component: () => import('@/views/uikit/FormLayout.vue')
