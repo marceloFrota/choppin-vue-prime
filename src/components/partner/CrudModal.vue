@@ -69,6 +69,7 @@ export default {
         create() {
             this.dialog = true;
             this.modalTitle = `Cadastrar ${this.objectLabel}`;
+            this.formAction = "POST",
             this.partner =null
         },
         edit(value) {
