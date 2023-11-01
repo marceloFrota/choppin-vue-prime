@@ -18,22 +18,40 @@
                 {{ formatDate(slotProps.data.updated_at) }}
             </template>
         </Column>
-        <Column sortable field="name" header="Nome">
+        <Column sortable field="total_price" header="Preço Total">
             <template #body="slotProps">
-                <span class="p-column-title">Nome</span>
-                {{ slotProps.data.name }}
+                <span class="p-column-title">Preço Total</span>
+                {{ slotProps.data.total_price }}
             </template>
         </Column>
-        <Column sortable field="description" header="Descrição">
+        <Column sortable field="id_customer" header="Cliente">
             <template #body="slotProps">
-                <span class="p-column-title">Descrição</span>
-                {{ slotProps.data.description }}
+                <span class="p-column-title">Cliente</span>
+                {{ slotProps.data.id_customer_data ? slotProps.data.id_customer_data.name : '-' }}
             </template>
         </Column>
-        <Column sortable field="image_url" header="Url da Imagem">
+        <Column sortable field="id_partner" header="Parceiro">
             <template #body="slotProps">
-                <span class="p-column-title">Url da Imagem</span>
-                {{ slotProps.data.image_url }}
+                <span class="p-column-title">Parceiro</span>
+                {{ slotProps.data.id_partner_data ? slotProps.data.id_partner_data.name : '-' }}
+            </template>
+        </Column>
+        <Column sortable field="eta" header="Tempo estimado de entrega">
+            <template #body="slotProps">
+                <span class="p-column-title">Tempo estimado de entrega</span>
+                {{ slotProps.data.eta }}
+            </template>
+        </Column>
+        <Column sortable field="delivery_fee" header="Valor da entrega">
+            <template #body="slotProps">
+                <span class="p-column-title">Valor da entrega</span>
+                {{ slotProps.data.delivery_fee }}
+            </template>
+        </Column>
+        <Column sortable field="status" header="Status">
+            <template #body="slotProps">
+                <span class="p-column-title">Status</span>
+                {{ slotProps.data.status }}
             </template>
         </Column>
         <Column frozen alignFrozen="right" headerStyle="min-width:10rem;">

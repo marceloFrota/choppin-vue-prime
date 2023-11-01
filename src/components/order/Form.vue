@@ -1,31 +1,56 @@
 <template>
     <div>
         <div class="grid p-fluid" ref="form">
-            <Form class="col-12" :initial-values="product_category" :validation-schema="validationSchema_product_category" @submit.capture="onSubmit">
+            <Form class="col-12" :initial-values="order" :validation-schema="validationSchema_order" @submit.capture="onSubmit">
                 <div class="field">
-                    <Field id="name" name="name" v-slot="{ handleChange, handleBlur }">
-                        <label for="name">Nome</label>
-                        <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="product_category.name" class="input" />
+                    <Field id="total_price" name="total_price" v-slot="{ handleChange, handleBlur }">
+                        <label for="total_price">Preço Total</label>
+                        <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="order.total_price" class="input" />
 
-                        <ErrorMessage class="p-error" name="name" />
+                        <ErrorMessage class="p-error" name="total_price" />
                     </Field>
                 </div>
 
                 <div class="field">
-                    <Field id="description" name="description" v-slot="{ handleChange, handleBlur }">
-                        <label for="description">Descrição</label>
-                        <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="product_category.description" class="input" />
-
-                        <ErrorMessage class="p-error" name="description" />
+                    <Field id="id_customer" name="id_customer" v-slot="{ handleChange, handleBlur }">
+                        <label for="id_customer">Cliente</label>
+                        <Dropdown v-model="order.id_customer" :options="customer_data" optionLabel="name" optionValue="id" placeholder="Selecione Cliente" class="w-full" />
+                        <ErrorMessage class="p-error" name="id_customer" />
                     </Field>
                 </div>
 
                 <div class="field">
-                    <Field id="image_url" name="image_url" v-slot="{ handleChange, handleBlur }">
-                        <label for="image_url">Url da Imagem</label>
-                        <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="product_category.image_url" class="input" />
+                    <Field id="id_partner" name="id_partner" v-slot="{ handleChange, handleBlur }">
+                        <label for="id_partner">Parceiro</label>
+                        <Dropdown v-model="order.id_partner" :options="partner_data" optionLabel="name" optionValue="id" placeholder="Selecione Parceiro" class="w-full" />
+                        <ErrorMessage class="p-error" name="id_partner" />
+                    </Field>
+                </div>
 
-                        <ErrorMessage class="p-error" name="image_url" />
+                <div class="field">
+                    <Field id="eta" name="eta" v-slot="{ handleChange, handleBlur }">
+                        <label for="eta">Tempo estimado de entrega</label>
+                        <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="order.eta" class="input" />
+
+                        <ErrorMessage class="p-error" name="eta" />
+                    </Field>
+                </div>
+
+                <div class="field">
+                    <Field id="delivery_fee" name="delivery_fee" v-slot="{ handleChange, handleBlur }">
+                        <label for="delivery_fee">Valor da entrega</label>
+                        <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="order.delivery_fee" class="input" />
+
+                        <ErrorMessage class="p-error" name="delivery_fee" />
+                    </Field>
+                </div>
+
+                <div class="field">
+                    <Field id="status" name="status" v-slot="{ handleChange, handleBlur }">
+                        <label for="status">Status</label>
+                        <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="order.status" class="input" />
+
+                        <ErrorMessage class="p-error" name="status" />
                     </Field>
                 </div>
 
@@ -38,26 +63,29 @@
 <script>
 import axios from 'axios';
 import { useAppStore } from '@/store/store.js';
-import { Field, Form, ErrorMessage, configure, validate } from 'vee-validate';
+import { useForm, Field, Form, ErrorMessage, configure, validate } from 'vee-validate';
 import * as zod from 'zod';
 import { toTypedSchema } from '@vee-validate/zod';
 import { unformat } from 'v-money3';
 import shared from '@/shared';
 
 export default {
-    name: 'Form_product_category',
+    name: 'Form_order',
     data() {
         return {
             isLoading: false,
             moneyConfig: shared.moneyConfig(),
             action: 'POST',
-            product_category: {
+            order: {
                 id: null,
                 created_at: null,
                 updated_at: null,
-                name: null,
-                description: null,
-                image_url: null
+                total_price: null,
+                id_customer: null,
+                id_partner: null,
+                eta: null,
+                delivery_fee: null,
+                status: null
             }
         };
     },
@@ -74,10 +102,21 @@ export default {
             this.applyRecord();
         }
     },
-    computed: {},
+    computed: {
+        customer_data() {
+            const store = useAppStore();
+            const data = store.customer_data;
+            return data;
+        },
+        partner_data() {
+            const store = useAppStore();
+            const data = store.partner_data;
+            return data;
+        }
+    },
     methods: {
         applyRecord() {
-            this.product_category = this.record;
+            this.order = this.record;
         },
         scrollToElement(id) {
             this.$nextTick(() => {
@@ -88,7 +127,7 @@ export default {
             });
         },
         async save() {
-            let url = `${BASE_API_URL}/product_category`;
+            let url = `${BASE_API_URL}/order`;
 
             this.isLoading = true;
             if (this.action == 'PATCH') {
@@ -97,7 +136,7 @@ export default {
             const config = {
                 method: this.action,
                 url: url,
-                data: this.product_category
+                data: this.order
             };
             await axios(config)
                 .then((response) => {
@@ -111,8 +150,8 @@ export default {
                     this.isLoading = false;
                 });
         },
-        async onSubmit() {
-            const validationErrors = await validate(this.product_category, this.validationSchema_product_category);
+        async onSubmit(values) {
+            const validationErrors = await validate(this.order, this.validationSchema_order);
             if (validationErrors.valid) {
                 this.save();
             } else {
@@ -128,16 +167,19 @@ export default {
             validateOnModelUpdate: true
         });
 
-        const validationSchema_product_category = toTypedSchema(
+        const validationSchema_order = toTypedSchema(
             zod.object({
-                name: zod.string().optional().nullable(),
-                description: zod.string().optional().nullable(),
-                image_url: zod.string().optional().nullable()
+                total_price: zod.string().optional().nullable(),
+                id_customer: zod.number().optional().nullable(),
+                id_partner: zod.number().optional().nullable(),
+                eta: zod.string().optional().nullable(),
+                delivery_fee: zod.string().optional().nullable(),
+                status: zod.string().optional().nullable()
             })
         );
 
         return {
-            validationSchema_product_category
+            validationSchema_order
         };
     }
 };
