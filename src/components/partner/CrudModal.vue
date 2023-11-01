@@ -46,7 +46,7 @@ export default {
             objectLabel: 'Parceiros',
             deleteDialog: false,
             modalTitle: '',
-            formAction: 'POST',
+            formAction: "POST",
             partner: null,
             toast: useToast()
         };
@@ -70,12 +70,15 @@ export default {
         create() {
             this.dialog = true;
             this.modalTitle = `Cadastrar ${this.objectLabel}`;
-            (this.formAction = 'POST'), (this.partner = null);
+            this.formAction = "POST",
+            this.partner =null
         },
         edit(value) {
             this.dialog = true;
             this.modalTitle = `Editar ${this.objectLabel}`;
-            (this.formAction = 'PATCH'), (this.partner = value);
+            this.formAction = "PATCH",
+            this.partner = value;
+
         },
         async remove(id) {
             let url = `${BASE_API_URL}/partner/${id}`;

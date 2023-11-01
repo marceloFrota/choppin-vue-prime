@@ -1,15 +1,23 @@
 <script setup>
-import { onMounted, reactive, ref, watch } from 'vue';
-import ProductService from '@/service/ProductService';
-import { useLayout } from '@/layout/composables/layout';
+import { onMounted, reactive, ref, watch, computed } from 'vue';
 
-const { isDarkTheme } = useLayout();
-const products = ref(null);
+import CustomRecentDataTable from '../../components/order/CustomRecentDataTable.vue';
 
-const productService = new ProductService();
+import { useAppStore } from '@/store/store.js';
+
+const store = useAppStore();
+
+// Dados reativos
+const recentSales = ref([]); // Certifique-se de que isso está sendo populado em store.get_order()
 
 onMounted(() => {
-    productService.getProductsSmall().then((data) => (products.value = data));
+    store.get_order();
+});
+
+// Função para calcular a soma das vendas recentes
+const order_data = computed(() => {
+    const data = store.order_data
+    return data;
 });
 
 const formatCurrency = (value) => {
@@ -20,32 +28,11 @@ const formatCurrency = (value) => {
 
 <template>
     <div class="grid">
-        
         <div class="col-12 xl:col-12">
             <div class="card">
-                <h5>Recent Sales</h5>
-                <DataTable :value="products" :rows="5" :paginator="true" responsiveLayout="scroll">
-                    <Column style="width: 15%">
-                        <template #header> Image </template>
-                        <template #body="slotProps">
-                            <img :src="'demo/images/product/' + slotProps.data.image" :alt="slotProps.data.image" width="50" class="shadow-2" />
-                        </template>
-                    </Column>
-                    <Column field="name" header="Name" :sortable="true" style="width: 35%"></Column>
-                    <Column field="price" header="Price" :sortable="true" style="width: 35%">
-                        <template #body="slotProps">
-                            {{ formatCurrency(slotProps.data.price) }}
-                        </template>
-                    </Column>
-                    <Column style="width: 15%">
-                        <template #header> View </template>
-                        <template #body>
-                            <Button icon="pi pi-search" type="button" class="p-button-text"></Button>
-                        </template>
-                    </Column>
-                </DataTable>
+                <h5>Pedidos Recentes</h5>
+                <CustomRecentDataTable :data="order_data"></CustomRecentDataTable>
             </div>
-
         </div>
     </div>
 </template>
