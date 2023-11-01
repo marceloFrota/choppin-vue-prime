@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
 
-
 const dropdownItems = ref([
     { name: 'Option 1', code: 'Option 1' },
     { name: 'Option 2', code: 'Option 2' },
@@ -30,7 +29,6 @@ const switchValue = ref(false);
 
 const toast = useToast();
 
-
 const showSuccess = () => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Detail', life: 3000 });
 };
@@ -40,18 +38,20 @@ const showSuccess = () => {
     <div class="grid">
         <div class="col-12">
             <div class="card">
-       <h5>Minha Loja</h5>
-                    
-       <Toast />
+                <h5>Minha Loja</h5>
+
+                <Toast />
                 <div class="p-fluid formgrid grid">
                     <div class="field col-12 md:col-6">
                         <label for="firstname2">Nome</label>
                         <InputText id="firstname2" type="text" />
                     </div>
-                    <div class="field col-12 md:col-6">
-                        <label for="lastname2">Status de Funcionamento</label>
-                        <InputSwitch v-model="switchValue" />
+
+                    <div class="flex align-items-center">
+                        <label for="">Status de Funcionamento</label>
+                        <InputSwitch class="ml-2" v-model="switchValue" />
                     </div>
+
                     <div class="field col-12">
                         <label for="address">Descrição</label>
                         <Textarea id="address" rows="4" />
@@ -72,7 +72,7 @@ const showSuccess = () => {
                         <h5>Cor da Loja</h5>
                         <ColorPicker style="width: 2rem" v-model="colorValue" />
                     </div>
-                    <Button   @click="showSuccess()" label="Salvar"></Button>
+                    <Button @click="showSuccess()" label="Salvar"></Button>
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@ const showSuccess = () => {
                     <label for="age1">CNPJ</label>
                     <InputText id="age1" type="text" />
                 </div>
-                <Button  @click="showSuccess()" label="Salvar"></Button>
+                <Button @click="showSuccess()" label="Salvar"></Button>
             </div>
 
             <div class="card p-fluid">
@@ -105,7 +105,7 @@ const showSuccess = () => {
                     <InputText id="email1" type="text" />
                 </div>
 
-                <Button  @click="showSuccess()" label="Salvar"></Button>
+                <Button @click="showSuccess()" label="Salvar"></Button>
             </div>
         </div>
 
@@ -113,15 +113,15 @@ const showSuccess = () => {
             <div class="card p-fluid">
                 <h5>Trocar Senha</h5>
                 <div class="field">
-                    <label for="password1" class="block text-900 font-medium text-xl mb-2">Nova Senha</label>
+                    <label for="password1">Nova Senha</label>
                     <Password id="password1" v-model="password" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
                 </div>
                 <div class="field">
-                    <label for="password1" class="block text-900 font-medium text-xl mb-2">Confirmação de Senha</label>
+                    <label for="password1">Confirmação de Senha</label>
                     <Password id="password1" v-model="password" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
                 </div>
 
-                <Button   @click="showSuccess()" label="Salvar"></Button>
+                <Button @click="showSuccess()" label="Salvar"></Button>
             </div>
 
             <div class="card p-fluid">
@@ -146,7 +146,7 @@ const showSuccess = () => {
                         </template>
                     </MultiSelect>
                 </div>
-                <Button  @click="showSuccess()" label="Salvar"></Button>
+                <Button @click="showSuccess()" label="Salvar"></Button>
             </div>
         </div>
     </div>
