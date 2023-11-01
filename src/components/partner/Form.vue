@@ -6,7 +6,7 @@
   
   
   
-    {{ action }}
+  
   
   
       <div class="field">
@@ -328,7 +328,6 @@
           if(this.record){
               this.applyRecord();
           }
-
       },
       computed: {
       },
@@ -346,6 +345,7 @@
           },
           async save() {
               let url = `${BASE_API_URL}/partner`;
+             
               this.isLoading = true;
               if(this.action == "PATCH"){
                   url = url+'/'+this.record.id;

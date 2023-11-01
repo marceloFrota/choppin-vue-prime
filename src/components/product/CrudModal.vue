@@ -10,9 +10,9 @@
         <DataTable_product :data="product_data" @remove="handleRemove" @edit="edit"></DataTable_product>
         <Toast />
 
-        <Dialog v-model:visible="dialog" :style="{ width: 'auto' }" :header="modalTitle" :modal="true">
+        <Dialog v-model:visible="dialog" :style="{ width: '450px' }" :header="modalTitle" :modal="true">
             <div class="flex align-items-center justify-content-center">
-                <Form_product :record="product" @saved="onSaved"></Form_product>
+                <Form_product :formAction="formAction" :record="product" @saved="onSaved"></Form_product>
             </div>
             <template #footer> </template>
         </Dialog>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { useAppStore } from '@/store/store.js';
 import DataTable_product from '../../components/product/DataTable.vue';
 import Form_product from '../../components/product/Form.vue';
@@ -45,6 +46,7 @@ export default {
             objectLabel: 'Produto',
             deleteDialog: false,
             modalTitle: '',
+            formAction: 'POST',
             product: null,
             toast: useToast()
         };
@@ -68,16 +70,32 @@ export default {
         create() {
             this.dialog = true;
             this.modalTitle = `Cadastrar ${this.objectLabel}`;
-            this.product =null
+            (this.formAction = 'POST'), (this.product = null);
         },
         edit(value) {
             this.dialog = true;
             this.modalTitle = `Editar ${this.objectLabel}`;
-            this.product = value;
-
+            (this.formAction = 'PATCH'), (this.product = value);
         },
-        remove(id){
-            // logica do remove
+        async remove(id) {
+            let url = `${BASE_API_URL}/product/${id}`;
+
+            this.isLoading = true;
+
+            const config = {
+                method: 'DELETE',
+                url: url
+            };
+            await axios(config)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                });
         },
         handleRemove(value) {
             this.deleteDialog = true;
@@ -85,6 +103,8 @@ export default {
             this.product = value;
         },
         onSaved() {
+            const store = useAppStore();
+            store.get_product();
             this.toast.add({ severity: 'success', summary: 'Sucesso', detail: `Cadastro de ${this.objectLabel} realizado com sucesso!`, life: 3000 });
             this.dialog = false;
         }

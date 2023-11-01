@@ -12,7 +12,7 @@
 
         <Dialog v-model:visible="dialog" :style="{ width: '450px' }" :header="modalTitle" :modal="true">
             <div class="flex align-items-center justify-content-center">
-                <Form_partner :record="partner" :formAction="formAction" @saved="onSaved"></Form_partner>
+                <Form_partner :formAction="formAction" :record="partner" @saved="onSaved"></Form_partner>
             </div>
             <template #footer> </template>
         </Dialog>
@@ -42,11 +42,11 @@ export default {
     data() {
         return {
             dialog: false,
-            objectLabel: 'Parceiro',
+            objectLabel: 'Parceiros',
             deleteDialog: false,
             modalTitle: '',
+            formAction: 'POST',
             partner: null,
-            formAction: "POST",
             toast: useToast()
         };
     },
@@ -69,17 +69,14 @@ export default {
         create() {
             this.dialog = true;
             this.modalTitle = `Cadastrar ${this.objectLabel}`;
-            this.formAction = "POST",
-            this.partner =null
+            (this.formAction = 'POST'), (this.partner = null);
         },
         edit(value) {
             this.dialog = true;
             this.modalTitle = `Editar ${this.objectLabel}`;
-            this.formAction = "PATCH",
-            this.partner = value;
-
+            (this.formAction = 'PATCH'), (this.partner = value);
         },
-        remove(id){
+        remove(id) {
             // logica do remove
         },
         handleRemove(value) {
@@ -88,6 +85,8 @@ export default {
             this.partner = value;
         },
         onSaved() {
+            const store = useAppStore();
+            store.get_partner();
             this.toast.add({ severity: 'success', summary: 'Sucesso', detail: `Cadastro de ${this.objectLabel} realizado com sucesso!`, life: 3000 });
             this.dialog = false;
         }

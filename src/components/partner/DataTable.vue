@@ -17,13 +17,13 @@
         <Column sortable field="created_at" header="Criação">
             <template #body="slotProps">
                 <span class="p-column-title">Criação</span>
-                {{ formatDateTime(slotProps.data.created_at)}}
+                {{ formatDate(slotProps.data.created_at) }}
             </template>
         </Column>
         <Column sortable field="updated_at" header="Atualização">
             <template #body="slotProps">
                 <span class="p-column-title">Atualização</span>
-                {{ formatDateTime(slotProps.data.updated_at) }}
+                {{ formatDate(slotProps.data.updated_at) }}
             </template>
         </Column>
         <Column sortable field="name" header="Nome">
@@ -139,7 +139,7 @@ computed: {
 },
 methods: {
     formatDate(dateString) {
-        return shared.formatDate(dateString);
+    return shared.formatDate(dateString);
     },
     formatDateTime(dateString) {
         return shared.formatDateTime(dateString);

@@ -1,7 +1,10 @@
 <template>
     <div>
-      <div class="grid p-fluid">
-      <Form class="col-12" :validation-schema="validationSchema_product" @submit="onSubmit">
+      <div class="grid p-fluid" ref="form">
+      <Form class="col-12" :initial-values="product" :validation-schema="validationSchema_product" @submit.capture="onSubmit">
+  
+  
+  
   
   
   
@@ -22,6 +25,9 @@
   
   
   
+  
+  
+  
       <div class="field">
           <Field id="description" name="description" v-slot="{ handleChange, handleBlur }">
               <label for="description">Descrição</label>
@@ -38,20 +44,26 @@
   
   
   
+  
+   
+  
       <div class="field">
           <Field id="price" name="price" v-slot="{ handleChange, handleBlur }">
               <label for="price">Preço</label>
               <InputText type="text" 
-                  @change="handleChange"
-                  @blur="handleBlur"
-                  v-model.lazy="product.price" 
-                  v-money3="moneyConfig"
-                  class="input" 
-              />
-              
+                    @change="handleChange"
+                    @blur="handleBlur"
+                    v-model.lazy="product.price" 
+                    v-money3="moneyConfig"
+                    class="input" 
+                />
               <ErrorMessage class="p-error" name="price" />
           </Field>
       </div>
+  
+  
+  
+  
   
   
   
@@ -81,7 +93,7 @@
                   optionLabel="name" 
                   optionValue="id" 
                   placeholder="Selecione Categoria" 
-                  class="w-full md:w-14rem" 
+                  class="w-full" 
               />
               <ErrorMessage class="p-error" name="id_product_category" />
           </Field>
@@ -100,7 +112,7 @@
                   optionLabel="name" 
                   optionValue="id" 
                   placeholder="Selecione Subcategoria" 
-                  class="w-full md:w-14rem" 
+                  class="w-full" 
               />
               <ErrorMessage class="p-error" name="id_product_subcategory" />
           </Field>
@@ -108,7 +120,7 @@
   
   
   
-        <Button label="Salvar"></Button>
+          <Button type="submit" label="Salvar" />
       </Form>
       </div>
     </div>
@@ -117,13 +129,14 @@
   
   
   <script>
+  import axios from 'axios';
   import { useAppStore } from "@/store/store.js";
-  import { useForm, Field, Form, ErrorMessage, configure } from 'vee-validate';
+  import { useForm, Field, Form, ErrorMessage, configure, validate } from 'vee-validate';
   import * as zod from 'zod';
   import { toTypedSchema } from '@vee-validate/zod';
   import { unformat } from "v-money3";
   import shared from '@/shared'
-
+  
   export default {
       name: 'Form_product',
       data(){
@@ -147,10 +160,14 @@
           }
       },
       props: {
-          record : Object
+          record : Object,
+          formAction : String,
       },
       components: { Field, Form, ErrorMessage },
       mounted(){
+          if(this.formAction){
+              this.action = this.formAction;
+          }
           if(this.record){
               this.applyRecord();
           }
@@ -171,16 +188,25 @@
           applyRecord(){
               this.product = this.record;
           },
+          scrollToElement(id) {
+              this.$nextTick(() => {
+                  const element = this.$refs[id];
+                  if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                  }
+              });
+          },
           async save() {
-            this.product.price = unformat(this.product.price, this.moneyConfig);
-
+              let url = `${BASE_API_URL}/product`;
+              this.product.price = unformat(this.product.price, this.moneyConfig);
+             
               this.isLoading = true;
               if(this.action == "PATCH"){
-                  BASE_API_URL = BASE_API_URL+'/'+this.id;
+                  url = url+'/'+this.record.id;
               }
               const config = {
                   method: this.action,
-                  url: `${BASE_API_URL}/product`,
+                  url: url,
                   data: this.product,
               };
               await axios(config).then(response => {
@@ -192,28 +218,33 @@
                   this.isLoading = false;
               });
           },
-          onSubmit(values) {
-              this.save(values);
+          async onSubmit(values) {
+              const validationErrors = await validate(this.product, this.validationSchema_product);
+              if (validationErrors.valid) {
+                  this.save();
+              } else {
+                  this.scrollToElement('form');
+              }
           },
       },
       setup() {
           configure({
-          validateOnBlur: true,
-          validateOnChange: true,
-          validateOnInput: false,
-          validateOnModelUpdate: true,
+              validateOnBlur: true,
+              validateOnChange: true,
+              validateOnInput: false,
+              validateOnModelUpdate: true,
           });
   
           const validationSchema_product = toTypedSchema(
               zod.object({
-          name: zod.string().optional(),
-          description: zod.string().optional(),
-          price: zod.string().optional(),
-          image: zod.string().optional(),
-          id_product_category: zod.string().optional(),
-          id_product_subcategory: zod.string().optional(),
+                  name: zod.string().optional().nullable(),
+                  description: zod.string().optional().nullable(),
+                  price: zod.string().optional().nullable(),
+                  image: zod.string().optional().nullable(),
+                  id_product_category: zod.number().optional().nullable(),
+                  id_product_subcategory: zod.number().optional().nullable(),
    
-          })
+              })
           );
   
           return {
