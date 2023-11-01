@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
+import { santosNeighborhoods } from '../../service/neighborhood';
 
 const dropdownItems = ref([
     { name: 'Option 1', code: 'Option 1' },
@@ -8,18 +9,7 @@ const dropdownItems = ref([
     { name: 'Option 3', code: 'Option 3' }
 ]);
 
-const multiselectValues = ref([
-    { name: 'Australia', code: 'AU' },
-    { name: 'Brazil', code: 'BR' },
-    { name: 'China', code: 'CN' },
-    { name: 'Egypt', code: 'EG' },
-    { name: 'France', code: 'FR' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'India', code: 'IN' },
-    { name: 'Japan', code: 'JP' },
-    { name: 'Spain', code: 'ES' },
-    { name: 'United States', code: 'US' }
-]);
+const multiselectValues = ref(santosNeighborhoods);
 
 const multiselectValue = ref(null);
 
@@ -97,12 +87,12 @@ const showSuccess = () => {
             <div class="card p-fluid">
                 <h5>Meios de Pagamento</h5>
                 <div class="field">
-                    <label for="name1">ID</label>
-                    <InputText id="name1" type="text" />
+                    <label for="id">ID</label>
+                    <InputText id="id" type="text" />
                 </div>
                 <div class="field">
-                    <label for="email1">Token</label>
-                    <InputText id="email1" type="text" />
+                    <label for="token">Token</label>
+                    <InputText id="token" type="text" />
                 </div>
 
                 <Button @click="showSuccess()" label="Salvar"></Button>
@@ -130,19 +120,12 @@ const showSuccess = () => {
                     <label for="state">Bairros</label>
                     <MultiSelect v-model="multiselectValue" :options="multiselectValues" optionLabel="name" placeholder="Select Countries" :filter="true">
                         <template #value="slotProps">
-                            <div class="inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2" v-for="option of slotProps.value" :key="option.code">
-                                <span :class="'mr-2 flag flag-' + option.code.toLowerCase()" style="width: 18px; height: 12px" />
+                            <div class="inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2" v-for="(option, index) of slotProps.value" :key="index">
                                 <div>{{ option.name }}</div>
                             </div>
                             <template v-if="!slotProps.value || slotProps.value.length === 0">
-                                <div class="p-1">Select Countries</div>
+                                <div class="p-1">Selecione o Bairro</div>
                             </template>
-                        </template>
-                        <template #option="slotProps">
-                            <div class="flex align-items-center">
-                                <span :class="'mr-2 flag flag-' + slotProps.option.code.toLowerCase()" style="width: 18px; height: 12px" />
-                                <div>{{ slotProps.option.name }}</div>
-                            </div>
                         </template>
                     </MultiSelect>
                 </div>
