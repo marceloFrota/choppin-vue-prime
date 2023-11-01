@@ -1,13 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
-import { santosNeighborhoods } from '../../service/neighborhood';
+import { santosNeighborhoods, brazilianStates } from '../../service/locations';
 
-const dropdownItems = ref([
-    { name: 'Option 1', code: 'Option 1' },
-    { name: 'Option 2', code: 'Option 2' },
-    { name: 'Option 3', code: 'Option 3' }
-]);
+const dropdownItems = ref(brazilianStates);
 
 const multiselectValues = ref(santosNeighborhoods);
 
@@ -52,7 +48,7 @@ const showSuccess = () => {
                     </div>
                     <div class="field col-12 md:col-3">
                         <label for="state">Estado</label>
-                        <Dropdown id="state" v-model="dropdownItem" :options="dropdownItems" optionLabel="name" placeholder="Select One"></Dropdown>
+                        <Dropdown id="state" v-model="dropdownItem" :options="dropdownItems" optionLabel="name" placeholder="Selecione o Estado"></Dropdown>
                     </div>
                     <div class="field col-12 md:col-3">
                         <label for="zip">CEP</label>
@@ -104,11 +100,11 @@ const showSuccess = () => {
                 <h5>Trocar Senha</h5>
                 <div class="field">
                     <label for="password1">Nova Senha</label>
-                    <Password id="password1" v-model="password" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
+                    <Password id="password1" placeholder="Senha" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
                 </div>
                 <div class="field">
                     <label for="password1">Confirmação de Senha</label>
-                    <Password id="password1" v-model="password" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
+                    <Password id="password1" placeholder="Senha" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
                 </div>
 
                 <Button @click="showSuccess()" label="Salvar"></Button>
