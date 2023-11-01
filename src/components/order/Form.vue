@@ -5,8 +5,7 @@
                 <div class="field">
                     <Field id="total_price" name="total_price" v-slot="{ handleChange, handleBlur }">
                         <label for="total_price">Preço Total</label>
-                        <InputText type="text" @change="handleChange" @blur="handleBlur" v-model="order.total_price" class="input" />
-
+                        <InputText type="text" @change="handleChange" @blur="handleBlur" v-model.lazy="order.total_price" v-money3="moneyConfig" class="input" />
                         <ErrorMessage class="p-error" name="total_price" />
                     </Field>
                 </div>
@@ -128,6 +127,7 @@ export default {
         },
         async save() {
             let url = `${BASE_API_URL}/order`;
+            this.order.total_price = unformat(this.order.total_price, this.moneyConfig);
 
             this.isLoading = true;
             if (this.action == 'PATCH') {
