@@ -21,7 +21,7 @@
         <Column sortable field="total_price" header="Preço Total">
             <template #body="slotProps">
                 <span class="p-column-title">Preço Total</span>
-                {{ slotProps.data.total_price }}
+                {{ formatCurrency(slotProps.data.total_price) }}
             </template>
         </Column>
         <Column sortable field="id_customer" header="Cliente">
