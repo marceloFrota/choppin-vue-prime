@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { useAppStore } from '@/store/store.js';
 import DataTable_partner from '../../components/partner/DataTable.vue';
 import Form_partner from '../../components/partner/Form.vue';
@@ -76,8 +77,29 @@ export default {
             this.modalTitle = `Editar ${this.objectLabel}`;
             (this.formAction = 'PATCH'), (this.partner = value);
         },
-        remove(id) {
-            // logica do remove
+        async remove(id) {
+            let url = `${BASE_API_URL}/partner/${id}`;
+
+            this.isLoading = true;
+
+            const config = {
+                method: 'DELETE',
+                url: url
+            };
+            await axios(config)
+                .then((response) => {
+                    console.log(response);
+                    this.toast.add({ severity: 'success', summary: 'Sucesso', detail: `${this.objectLabel} removido com sucesso!`, life: 3000 });
+                    this.deleteDialog = false;
+                    const store = useAppStore();
+                    store.get_partner();
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                });
         },
         handleRemove(value) {
             this.deleteDialog = true;
