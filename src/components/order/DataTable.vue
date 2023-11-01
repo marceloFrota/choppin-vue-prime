@@ -30,28 +30,10 @@
                 {{ slotProps.data.description }}
             </template>
         </Column>
-        <Column sortable field="price" header="Preço">
+        <Column sortable field="image_url" header="Url da Imagem">
             <template #body="slotProps">
-                <span class="p-column-title">Preço</span>
-                {{ formatCurrency(slotProps.data.price) }}
-            </template>
-        </Column>
-        <Column sortable field="image" header="Imagem">
-            <template #body="slotProps">
-                <span class="p-column-title">Imagem</span>
-                {{ slotProps.data.image }}
-            </template>
-        </Column>
-        <Column sortable field="id_product_category" header="Categoria">
-            <template #body="slotProps">
-                <span class="p-column-title">Categoria</span>
-                {{ slotProps.data.id_product_category_data ? slotProps.data.id_product_category_data.name : '-' }}
-            </template>
-        </Column>
-        <Column sortable field="id_product_subcategory" header="Subcategoria">
-            <template #body="slotProps">
-                <span class="p-column-title">Subcategoria</span>
-                {{ slotProps.data.id_product_subcategory_data ? slotProps.data.id_product_subcategory_data.name : '-' }}
+                <span class="p-column-title">Url da Imagem</span>
+                {{ slotProps.data.image_url }}
             </template>
         </Column>
         <Column frozen alignFrozen="right" headerStyle="min-width:10rem;">
