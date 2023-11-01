@@ -12,7 +12,7 @@
 
         <Dialog v-model:visible="dialog" :style="{ width: '450px' }" :header="modalTitle" :modal="true">
             <div class="flex align-items-center justify-content-center">
-                <Form_partner :record="partner" @saved="onSaved"></Form_partner>
+                <Form_partner :record="partner" :formAction="formAction" @saved="onSaved"></Form_partner>
             </div>
             <template #footer> </template>
         </Dialog>
@@ -46,6 +46,7 @@ export default {
             deleteDialog: false,
             modalTitle: '',
             partner: null,
+            formAction: "POST",
             toast: useToast()
         };
     },
@@ -73,6 +74,7 @@ export default {
         edit(value) {
             this.dialog = true;
             this.modalTitle = `Editar ${this.objectLabel}`;
+            this.formAction = "PATCH",
             this.partner = value;
 
         },

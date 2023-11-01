@@ -55,6 +55,11 @@ const router = createRouter({
                     component: () => import('@/components/shared/FileUploadMultiple.vue')
                 },
                 {
+                    path: '/choppin/form2',
+                    name: 'choppinform2',
+                    component: () => import('@/components/partner/Form2.vue')
+                },
+                {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
                     component: () => import('@/views/uikit/FormLayout.vue')
