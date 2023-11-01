@@ -24,6 +24,16 @@ const router = createRouter({
                     component: () => import('@/components/product/CrudModal.vue')
                 },
                 {
+                    path: '/choppin/product_category',
+                    name: 'choppinproduct_category',
+                    component: () => import('@/components/product_category/CrudModal.vue')
+                },
+                {
+                    path: '/choppin/product_subcategory',
+                    name: 'choppinproduct_subcategory',
+                    component: () => import('@/components/product_subcategory/CrudModal.vue')
+                },
+                {
                     path: '/choppin/order',
                     name: 'choppinorder',
                     component: () => import('@/components/order/CrudModal.vue')
