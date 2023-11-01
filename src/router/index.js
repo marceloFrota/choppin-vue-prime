@@ -13,7 +13,21 @@ const router = createRouter({
                     name: 'dashboard',
                     component: () => import('@/views/Dashboard.vue')
                 },
-                
+                {
+                    path: '/choppin/partner',
+                    name: 'choppinpartner',
+                    component: () => import('@/components/partner/CrudModal.vue')
+                },
+                {
+                    path: '/choppin/product',
+                    name: 'choppinproduct',
+                    component: () => import('@/components/product/CrudModal.vue')
+                },
+                {
+                    path: '/choppin/order',
+                    name: 'choppinorder',
+                    component: () => import('@/components/order/CrudModal.vue')
+                },
                 {
                     path: '/choppin/settings',
                     name: 'choppinsettings',
@@ -34,16 +48,7 @@ const router = createRouter({
                     name: 'choppinorderdetails',
                     component: () => import('@/views/choppin/OrderDetails.vue')
                 },
-                {
-                    path: '/choppin/partner',
-                    name: 'choppinpartner',
-                    component: () => import('@/components/partner/CrudModal.vue')
-                },
-                {
-                    path: '/choppin/product',
-                    name: 'choppinproduct',
-                    component: () => import('@/components/product/CrudModal.vue')
-                },
+                
                 {
                     path: '/choppin/fileuploadsimple',
                     name: 'choppinfileuploadsimple',

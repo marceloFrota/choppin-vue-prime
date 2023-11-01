@@ -4,33 +4,42 @@ import { ref } from 'vue';
 import AppMenuItem from './AppMenuItem.vue';
 
 const model = ref([
-    {
-        label: 'Home',
-        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
-    },
+    
     {
         label: 'Admin',
         items: [
             { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' },
-            { label: 'Meu Catálogo', icon: 'pi pi-fw pi-id-card', to: '/choppin/catalog' },
-            { label: 'Meus Pedidos', icon: 'pi pi-fw pi-id-card', to: '/choppin/orders' },
-            { label: 'Meu Perfil', icon: 'pi pi-fw pi-id-card', to: '/choppin/settings' },
-            { label: 'Product Data ', icon: 'pi pi-fw pi-id-card', to: '/choppin/product' },
-            { label: 'Upload Simple', icon: 'pi pi-fw pi-id-card', to: '/choppin/fileuploadsimple' },
-            { label: 'Upload Multiple', icon: 'pi pi-fw pi-id-card', to: '/choppin/fileuploadmultiple' },
+            { label: 'Parceiros', icon: 'pi pi-fw pi-id-card', to: '/choppin/partner' },
+            { label: 'Clientes', icon: 'pi pi-fw pi-id-card', to: '/choppin/customer' },
+            { label: 'Pedidos', icon: 'pi pi-fw pi-id-card', to: '/choppin/order' },
+            { label: 'Categorias', icon: 'pi pi-fw pi-id-card', to: '/choppin/product_category' },
+            { label: 'Subcategorias', icon: 'pi pi-fw pi-id-card', to: '/choppin/product_subcategory' },
+            { label: 'Produtos', icon: 'pi pi-fw pi-id-card', to: '/choppin/product' },
+            { label: 'Configurações', icon: 'pi pi-fw pi-id-card', to: '/choppin/settings' },
+            
 
         ]
     },
     {
         label: 'Parceiro',
         items: [
-            { label: 'CRUD Partner', icon: 'pi pi-fw pi-id-card', to: '/choppin/partner' },
+            { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' },
+            { label: 'Meus Pedidos', icon: 'pi pi-fw pi-id-card', to: '/choppin/orders' },
+            { label: 'Meus Clientes', icon: 'pi pi-fw pi-id-card', to: '/choppin/customer' },
+            { label: 'Meu Catálogo', icon: 'pi pi-fw pi-id-card', to: '/choppin/catalog' },
+            { label: 'Meu Perfil', icon: 'pi pi-fw pi-id-card', to: '/choppin/settings' },
 
         ]
     },
     {
+        label: 'Home',
+        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
+    },
+    {
         label: 'UI Components',
         items: [
+            { label: 'Upload Simple', icon: 'pi pi-fw pi-id-card', to: '/choppin/fileuploadsimple' },
+            { label: 'Upload Multiple', icon: 'pi pi-fw pi-id-card', to: '/choppin/fileuploadmultiple' },
             { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
             { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
             { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', to: '/uikit/floatlabel' },
