@@ -11,7 +11,7 @@ const router = createRouter({
                 {
                     path: '/',
                     name: 'dashboard',
-                    component: () => import('@/views/Dashboard.vue')
+                    component: () => import('@/views/choppin/AdminDashboard.vue')
                 },
                 {
                     path: '/choppin/partner',
@@ -68,7 +68,7 @@ const router = createRouter({
                     name: 'choppinorderdetails',
                     component: () => import('@/views/choppin/OrderDetails.vue')
                 },
-                
+
                 {
                     path: '/choppin/fileuploadsimple',
                     name: 'choppinfileuploadsimple',
@@ -78,11 +78,6 @@ const router = createRouter({
                     path: '/choppin/fileuploadmultiple',
                     name: 'choppinfileuploadmultiple',
                     component: () => import('@/components/shared/FileUploadMultiple.vue')
-                },
-                {
-                    path: '/choppin/form2',
-                    name: 'choppinform2',
-                    component: () => import('@/components/partner/Form2.vue')
                 },
                 {
                     path: '/uikit/formlayout',
