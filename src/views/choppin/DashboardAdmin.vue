@@ -125,21 +125,38 @@ watch(
 
 <template>
     <div class="grid">
+        <!-- OBJETO ORDER -->
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
                 <div class="flex justify-content-between mb-3">
                     <div>
                         <span class="block text-500 font-medium mb-3">Pedidos</span>
-                        <div class="text-900 font-medium text-xl">152</div>
+                        <div class="text-900 font-medium text-xl">info</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
                         <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">24 novos </span>
-                <span class="text-500">nas útimas 6 horas</span>
+                <router-link to="/choppin/order">Link</router-link>
             </div>
         </div>
+        <!-- OBJETO PARTNER -->
+        <div class="col-12 lg:col-6 xl:col-3">
+            <div class="card mb-0">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3">Parceiros</span>
+                        <div class="text-900 font-medium text-xl">Info</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width: 2.5rem; height: 2.5rem">
+                        <i class="pi pi-map-marker text-orange-500 text-xl"></i>
+                    </div>
+                </div>
+                <router-link to="/choppin/order">Link</router-link>
+            </div>
+        </div>
+
+        <!-- OBJETO PRODUCT -->
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
                 <div class="flex justify-content-between mb-3">
@@ -151,38 +168,7 @@ watch(
                         <i class="pi pi-map-marker text-orange-500 text-xl"></i>
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">%52+ </span>
-                <span class="text-500">em relação a última semana</span>
-            </div>
-        </div>
-        <div class="col-12 lg:col-6 xl:col-3">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Clientes atendidos</span>
-                        <div class="text-900 font-medium text-xl">14</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-inbox text-cyan-500 text-xl"></i>
-                    </div>
-                </div>
-                <span class="text-green-500 font-medium">3 </span>
-                <span class="text-500">novos clientes</span>
-            </div>
-        </div>
-        <div class="col-12 lg:col-6 xl:col-3">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Suporte ao Cliente</span>
-                        <div class="text-900 font-medium text-xl">1 Não visualizada</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-purple-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-comment text-purple-500 text-xl"></i>
-                    </div>
-                </div>
-                <span class="text-green-500 font-medium">6 </span>
-                <span class="text-500">Respondidas</span>
+                <router-link to="/choppin/order">Link</router-link>
             </div>
         </div>
 
