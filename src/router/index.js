@@ -10,7 +10,7 @@ const router = createRouter({
             children: [
                 {
                     path: '/',
-                    name: 'dashboardadmin',
+                    name: 'dashboard',
                     component: () => import('@/views/choppin/DashboardAdmin.vue')
                 },
                 {
