@@ -2,7 +2,7 @@ import * as luxon from "luxon";
 
 const shared = {
   partnerStatus:[
-    {value: "new", text: "Novo" nextStatus:["*"]},
+    {value: "new", text: "Novo", nextStatus:["*"]},
     {value: "proposal", text: "Em proposta", nextStatus:["expired", "active"]},
     {value: "renewal", text: "Renovação"},    
   ],
