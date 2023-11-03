@@ -101,13 +101,20 @@
         <Column sortable field="active" header="Ativo">
             <template #body="slotProps">
                 <span class="p-column-title">Ativo</span>
-                {{ slotProps.data.active }}
+                <i class="pi" :class="{ 'pi-check-circle text-green-500': slotProps.data.active, 'pi-times-circle text-red-400': !slotProps.data.active }"></i>
+
             </template>
         </Column>
         <Column sortable field="operating_hours" header="Horário de funcionamento">
             <template #body="slotProps">
                 <span class="p-column-title">Horário de funcionamento</span>
                 {{ slotProps.data.operating_hours }}
+            </template>
+        </Column>
+        <Column sortable field="status" header="Status">
+            <template #body="slotProps">
+                <span class="p-column-title">Status</span>
+                {{ slotProps.data.status }}
             </template>
         </Column>
     <Column frozen alignFrozen="right" headerStyle="min-width:10rem;">
