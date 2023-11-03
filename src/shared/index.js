@@ -1,6 +1,11 @@
 import * as luxon from "luxon";
 
 const shared = {
+  partnerStatus:[
+    {value: "new", text: "Novo" nextStatus:["*"]},
+    {value: "proposal", text: "Em proposta", nextStatus:["expired", "active"]},
+    {value: "renewal", text: "Renovação"},    
+  ],
   formatDateTime: function (dateString) {
     return luxon.DateTime.fromISO(dateString).toFormat("dd/MM/yyyy HH:mm");
   },

@@ -53,7 +53,13 @@ onMounted(() => {
 
 <template>
     <div  v-if="order_data" class="grid">
+        
         <div class="col-6">
+          <div class="card">
+                <h5>Detalhes do Pedido</h5>
+                
+            </div>
+
             <div class="card">
                 <h5>Itens do Pedido</h5>
                 <DataTable :value="order_item_data" :rows="5"  responsiveLayout="scroll">
