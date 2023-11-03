@@ -10,8 +10,18 @@ const router = createRouter({
             children: [
                 {
                     path: '/',
-                    name: 'dashboard',
-                    component: () => import('@/views/choppin/AdminDashboard.vue')
+                    name: 'dashboardadmin',
+                    component: () => import('@/views/choppin/DashboardAdmin.vue')
+                },
+                {
+                    path: '/choppin/dashboardadmin',
+                    name: 'dashboardadmin',
+                    component: () => import('@/views/choppin/DashboardAdmin.vue')
+                },
+                {
+                    path: '/choppin/dashboardpartner',
+                    name: 'dashboardpartner',
+                    component: () => import('@/views/choppin/DashboardPartner.vue')
                 },
                 {
                     path: '/choppin/partner',
