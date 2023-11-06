@@ -26,6 +26,13 @@
                 {{ slotProps.data.eta }}
             </template>
         </Column>
+        <Column sortable field="status" header="Status">
+            <template #body="slotProps">
+                <span class="p-column-title">Status</span>
+                <Tag class="mr-2" :severity="getSeverity('sucess')" value="Novo"></Tag>
+
+            </template>
+        </Column>
         <Column style="width: 15%">
             <template #header> View </template>
             <template #body="slotProps">
@@ -37,6 +44,8 @@
 
 <script>
 import shared from '@/shared';
+import { useAppStore } from '@/store/store.js';
+
 
 export default {
     data() {
@@ -69,7 +78,13 @@ export default {
         viewOrder(id) {
             // Use o roteador Vue para navegar para a nova rota com o ID do pedido
             this.$router.push(`/choppin/order/${id}`);
-        }
+        },
+        getSeverity(value) {
+        const store = useAppStore();
+        const severity = store.getSeverity(value);
+        return severity
+        
+    },
     }
 };
 </script>

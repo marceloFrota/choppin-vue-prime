@@ -2,6 +2,7 @@
 import { onMounted, reactive, ref, watch, computed } from 'vue';
 
 import CustomRecentDataTable from '../../components/order/CustomRecentDataTable.vue';
+import RealTimeRadar from '../../components/order/RealTimeRadar.vue';
 
 import { useAppStore } from '@/store/store.js';
 
@@ -29,6 +30,10 @@ const formatCurrency = (value) => {
 <template>
     <div class="grid">
         <div class="col-12 xl:col-12">
+            <div >
+                <RealTimeRadar></RealTimeRadar>
+           
+            </div>
             <div class="card">
                 <h5>Pedidos Recentes</h5>
                 <CustomRecentDataTable :data="order_data"></CustomRecentDataTable>

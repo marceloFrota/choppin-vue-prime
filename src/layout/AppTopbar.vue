@@ -26,7 +26,7 @@ const onTopBarMenuButton = () => {
 };
 const onSettingsClick = () => {
     topbarMenuActive.value = false;
-    router.push('/documentation');
+    router.push('/choppin/settings');
 };
 const topbarMenuClasses = computed(() => {
     return {

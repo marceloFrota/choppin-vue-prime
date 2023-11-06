@@ -114,7 +114,8 @@
         <Column sortable field="status" header="Status">
             <template #body="slotProps">
                 <span class="p-column-title">Status</span>
-                {{ slotProps.data.status }}
+                <Tag class="mr-2" :severity="getSeverity('unqualified')" value="inativo"></Tag>
+
             </template>
         </Column>
     <Column frozen alignFrozen="right" headerStyle="min-width:10rem;">
@@ -128,6 +129,9 @@
 
 <script>
 import shared from '@/shared'
+import { useAppStore } from '@/store/store.js';
+
+
 
 
 export default {
@@ -145,6 +149,12 @@ computed: {
     }
 },
 methods: {
+    getSeverity(value) {
+        const store = useAppStore();
+        const severity = store.getSeverity(value);
+        return severity
+        
+    },
     formatDate(dateString) {
     return shared.formatDate(dateString);
     },

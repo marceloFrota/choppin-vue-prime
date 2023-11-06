@@ -15,6 +15,24 @@ export const useAppStore = defineStore('app', {
         product_subcategory_data: null,
     }),
     actions: {
+        getSeverity(status) {
+            switch (status) {
+                case 'unqualified':
+                    return 'danger';
+
+                case 'qualified':
+                    return 'success';
+
+                case 'new':
+                    return 'info';
+
+                case 'negotiation':
+                    return 'warning';
+
+                case 'renewal':
+                    return null;
+            }
+        },
         async get_partner(params = {}) {
             //const token = this.getToken();
             const config = {
