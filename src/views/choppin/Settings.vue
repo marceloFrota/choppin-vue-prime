@@ -33,9 +33,9 @@ const showSuccess = () => {
                         <InputText id="firstname2" type="text" />
                     </div>
 
-                    <div class="flex align-items-center">
+                    <div class="flex flex-column justify-content-evenly">
                         <label for="">Status de Funcionamento</label>
-                        <InputSwitch class="ml-2" v-model="switchValue" />
+                        <InputSwitch v-model="switchValue" />
                     </div>
 
                     <div class="field col-12">
@@ -54,8 +54,8 @@ const showSuccess = () => {
                         <label for="zip">CEP</label>
                         <InputText id="zip" type="text" />
                     </div>
-                    <div class="field col-12 md:col-6">
-                        <h5>Cor da Loja</h5>
+                    <div class="field col-12 md:col-6 flex flex-column justify-content-evenly">
+                        <label>Cor da Loja</label>
                         <ColorPicker style="width: 2rem" v-model="colorValue" />
                     </div>
                     <Button @click="showSuccess()" label="Salvar"></Button>

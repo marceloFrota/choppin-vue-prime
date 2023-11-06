@@ -8,31 +8,30 @@
                 </template>
             </Column>
         </Column>
-            <Column sortable field="id_customer" header="Cliente">
-                <template #body="slotProps">
-                    <span class="p-column-title">Cliente</span>
-                    {{ slotProps.data.id_customer_data ? slotProps.data.id_customer_data.name : '-' }}
-                </template>
-            </Column>
-            <Column sortable field="total_price" header="Preço Total">
-                <template #body="slotProps">
-                    <span class="p-column-title">Preço Total</span>
-                    {{ formatCurrency(slotProps.data.total_price) }}
-                </template>
-            </Column>
-            <Column sortable field="eta" header="Tempo estimado de entrega">
-                <template #body="slotProps">
-                    <span class="p-column-title">Tempo estimado de entrega</span>
-                    {{ slotProps.data.eta }}
-                </template>
-            </Column>
-            <Column style="width: 15%">
-                <template #header> View </template>
-                <template #body="slotProps">
-                    <Button icon="pi pi-search" type="button" class="p-button-text" @click="viewOrder(slotProps.data.id)"></Button>
-                </template>
-            </Column>
-        
+        <Column sortable field="id_customer" header="Cliente">
+            <template #body="slotProps">
+                <span class="p-column-title">Cliente</span>
+                {{ slotProps.data.id_customer_data ? slotProps.data.id_customer_data.name : '-' }}
+            </template>
+        </Column>
+        <Column sortable field="total_price" header="Preço Total">
+            <template #body="slotProps">
+                <span class="p-column-title">Preço Total</span>
+                {{ formatCurrency(slotProps.data.total_price) }}
+            </template>
+        </Column>
+        <Column sortable field="eta" header="Tempo estimado de entrega">
+            <template #body="slotProps">
+                <span class="p-column-title">Tempo estimado de entrega</span>
+                {{ slotProps.data.eta }}
+            </template>
+        </Column>
+        <Column style="width: 15%">
+            <template #header> View </template>
+            <template #body="slotProps">
+                <Button icon="pi pi-search" type="button" class="p-button-text" @click="viewOrder(slotProps.data.id)"></Button>
+            </template>
+        </Column>
     </DataTable>
 </template>
 

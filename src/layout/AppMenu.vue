@@ -24,7 +24,6 @@ const model = ref([
             { label: 'Meus Pedidos', icon: 'pi pi-fw pi-id-card', to: '/choppin/orders' },
             { label: 'Meus Clientes', icon: 'pi pi-fw pi-id-card', to: '/choppin/customer' },
             { label: 'Meu Catálogo', icon: 'pi pi-fw pi-id-card', to: '/choppin/catalog' },
-            { label: 'Meu Perfil', icon: 'pi pi-fw pi-id-card', to: '/choppin/settings' },
             { label: 'Configurações', icon: 'pi pi-fw pi-id-card', to: '/choppin/settings' }
         ]
     }

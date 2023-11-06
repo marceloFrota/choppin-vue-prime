@@ -210,9 +210,9 @@ export default {
 
         const validationSchema_customer = toTypedSchema(
             zod.object({
-                name: zod.string().optional().nullable(),
-                email: zod.string().email().optional().nullable(),
-                phone_number: zod.string().optional().nullable(),
+                name: zod.string().min(1),
+                email: zod.string().email().min(1),
+                phone_number: zod.string().min(1),
                 doc_cpf: zod.string().optional().nullable(),
                 date_of_birth: zod.string().optional().nullable(),
                 address_line_1: zod.string().optional().nullable(),
