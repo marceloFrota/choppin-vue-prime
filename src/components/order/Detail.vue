@@ -64,22 +64,22 @@ onMounted(() => {
                 <h5>Itens do Pedido</h5>
                 <DataTable :value="order_item_data" :rows="5"  responsiveLayout="scroll">
                     <Column style="width: 15%">
-                        <template #header> Image </template>
+                        <template #header> Imagem </template>
                         <template #body="slotProps">
                             <img :src=" slotProps.data.id_product_data.image" :alt="slotProps.data.image" width="50" class="shadow-2" />
                         </template>
                     </Column>
-                    <Column field="name" header="Name" :sortable="true" style="width: 35%">
+                    <Column field="name" header="Produto" :sortable="true" style="width: 35%">
                     <template #body="slotProps">
                         {{ slotProps.data.id_product_data.name }}
                     </template></Column>
-                    <Column field="price" header="Price" :sortable="true" style="width: 35%">
+                    <Column field="price" header="Valor" :sortable="true" style="width: 35%">
                         <template #body="slotProps">
                             {{ slotProps.data.product_price }}
                         </template>
                     </Column>
                     <Column style="width: 15%">
-                        <template #header> View </template>
+                        <template #header> Visualizar </template>
                         <template #body>
                             <Button icon="pi pi-search" type="button" class="p-button-text"></Button>
                         </template>
