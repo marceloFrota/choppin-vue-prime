@@ -24,23 +24,21 @@
   
   
   
-  
-  
-  
-  
+
+
       <div class="field">
-          <Field id="type" name="type" v-slot="{ handleChange, handleBlur }">
-              <label for="type">Tipo de movimentação</label>
-              <InputText type="text" 
-                  @change="handleChange"
-                  @blur="handleBlur"
-                  v-model="stock.type" 
-                  class="input" 
-              />
-              
-              <ErrorMessage class="p-error" name="type" />
-          </Field>
-      </div>
+            <label class="mb-3">Tipo de movimentação</label>
+            <div class="formgrid grid">
+                <div class="field-radiobutton col-6">
+                    <RadioButton id="category1" name="category" value="in" v-model="stock.type" />
+                    <label for="category1">Entrada</label>
+                </div>
+                <div class="field-radiobutton col-6">
+                    <RadioButton id="category2" name="category" value="out" v-model="stock.type" />
+                    <label for="category2">Saída</label>
+                </div>
+            </div>
+        </div>
   
   
   

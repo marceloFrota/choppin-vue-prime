@@ -29,7 +29,7 @@
         <Column sortable field="status" header="Status">
             <template #body="slotProps">
                 <span class="p-column-title">Status</span>
-                <Tag class="mr-2" :severity="getSeverity('sucess')" value="Novo"></Tag>
+                <Tag class="mr-2" :severity="getSeverity('slotProps.data.status')" :value="slotProps.data.status"></Tag>
 
             </template>
         </Column>
@@ -79,12 +79,24 @@ export default {
             // Use o roteador Vue para navegar para a nova rota com o ID do pedido
             this.$router.push(`/choppin/order/${id}`);
         },
-        getSeverity(value) {
-        const store = useAppStore();
-        const severity = store.getSeverity(value);
-        return severity
-        
-    },
+        getSeverity(status) {
+            switch (status) {
+                case 'unqualified':
+                    return 'danger';
+
+                case 'accepted':
+                    return 'danger';
+
+                case 'new':
+                    return 'info';
+
+                case 'negotiation':
+                    return 'warning';
+
+                case 'renewal':
+                    return null;
+            }
+        },
     }
 };
 </script>
