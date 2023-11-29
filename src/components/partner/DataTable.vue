@@ -149,11 +149,23 @@ computed: {
     }
 },
 methods: {
-    getSeverity(value) {
-        const store = useAppStore();
-        const severity = store.getSeverity(value);
-        return severity
-        
+    getSeverity(status) {
+        switch (status) {
+            case 'unqualified':
+                return 'danger';
+
+            case 'qualified':
+                return 'success';
+
+            case 'new':
+                return 'info';
+
+            case 'negotiation':
+                return 'warning';
+
+            case 'renewal':
+                return null;
+        }
     },
     formatDate(dateString) {
     return shared.formatDate(dateString);

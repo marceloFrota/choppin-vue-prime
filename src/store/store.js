@@ -13,26 +13,10 @@ export const useAppStore = defineStore('app', {
         cart_item_data: null,
         order_status_data: null,
         product_subcategory_data: null,
+        stock_data: null,
     }),
     actions: {
-        getSeverity(status) {
-            switch (status) {
-                case 'unqualified':
-                    return 'danger';
-
-                case 'qualified':
-                    return 'success';
-
-                case 'new':
-                    return 'info';
-
-                case 'negotiation':
-                    return 'warning';
-
-                case 'renewal':
-                    return null;
-            }
-        },
+        
         async get_partner(params = {}) {
             //const token = this.getToken();
             const config = {
@@ -155,6 +139,21 @@ export const useAppStore = defineStore('app', {
             try {
                 const response = await axios(config);
                 this.product_subcategory_data = response.data.data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async get_stock(params = {}) {
+            //const token = this.getToken();
+            const config = {
+                method: "get",
+                url: `${BASE_API_URL}/stock`,
+                params
+            };
+            try {
+                const response = await axios(config);
+                this.stock_data = response.data.data;
+                this.stock = response.data;
             } catch (error) {
                 console.error(error);
             }

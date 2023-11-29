@@ -154,7 +154,13 @@ export default {
             this.applyRecord();
         }
     },
-    computed: {},
+    computed: {
+        stock_data() {
+              const store = useAppStore();
+              const data = store.stock_data;
+              return data;
+          },
+    },
     methods: {
         applyRecord() {
             this.customer = this.record;
