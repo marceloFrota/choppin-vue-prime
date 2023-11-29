@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
-import axios from "axios";
+import { defineStore } from 'pinia';
+import axios from 'axios';
 
 //App - choppin
 export const useAppStore = defineStore('app', {
@@ -14,13 +14,13 @@ export const useAppStore = defineStore('app', {
         order_status_data: null,
         product_subcategory_data: null,
         stock_data: null,
+        offer_data: null
     }),
     actions: {
-        
         async get_partner(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/partner`,
                 params
             };
@@ -34,7 +34,7 @@ export const useAppStore = defineStore('app', {
         async get_product(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/product`,
                 params
             };
@@ -48,7 +48,7 @@ export const useAppStore = defineStore('app', {
         async get_customer(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/customer`,
                 params
             };
@@ -62,7 +62,7 @@ export const useAppStore = defineStore('app', {
         async get_product_category(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/product_category`,
                 params
             };
@@ -76,7 +76,7 @@ export const useAppStore = defineStore('app', {
         async get_order(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/order`,
                 params
             };
@@ -90,7 +90,7 @@ export const useAppStore = defineStore('app', {
         async get_order_item(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/order_item`,
                 params
             };
@@ -104,7 +104,7 @@ export const useAppStore = defineStore('app', {
         async get_cart_item(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/cart_item`,
                 params
             };
@@ -118,7 +118,7 @@ export const useAppStore = defineStore('app', {
         async get_order_status(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/order_status`,
                 params
             };
@@ -132,7 +132,7 @@ export const useAppStore = defineStore('app', {
         async get_product_subcategory(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/product_subcategory`,
                 params
             };
@@ -146,7 +146,7 @@ export const useAppStore = defineStore('app', {
         async get_stock(params = {}) {
             //const token = this.getToken();
             const config = {
-                method: "get",
+                method: 'get',
                 url: `${BASE_API_URL}/stock`,
                 params
             };
@@ -158,5 +158,19 @@ export const useAppStore = defineStore('app', {
                 console.error(error);
             }
         },
+        async get_offer(params = {}) {
+            //const token = this.getToken();
+            const config = {
+                method: 'get',
+                url: `${BASE_API_URL}/offer`,
+                params
+            };
+            try {
+                const response = await axios(config);
+                this.offer_data = response.data.data;
+            } catch (error) {
+                console.error(error);
+            }
+        }
     }
-})
+});

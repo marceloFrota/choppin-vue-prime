@@ -64,6 +64,11 @@ const router = createRouter({
                     component: () => import('@/components/stock/CrudModal.vue')
                 },
                 {
+                    path: '/choppin/offer',
+                    name: 'choppinoffer',
+                    component: () => import('@/components/offer/CrudModal.vue')
+                },
+                {
                     path: '/choppin/settings',
                     name: 'choppinsettings',
                     component: () => import('@/views/choppin/Settings.vue')
