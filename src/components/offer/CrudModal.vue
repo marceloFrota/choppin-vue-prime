@@ -1,38 +1,61 @@
 <template>
-    <div>
-        <div class="columns">
-            <div class="column"></div>
-            <div class="column is-one-fifth box-button">
-                <button class="button" @click="openModal">Criar Promoção</button>
-            </div>
-        </div>
-        <Modal :title="'Criar Promoção'" ref="modal">
-            <Form_product_category @close="closeModal"></Form_product_category>
-        </Modal>
-        <Modal :title="'Remover Promoção'" ref="remove"><h1>remover</h1></Modal>
+    <div class="card">
+        <Toolbar class="mb-4">
+            <template v-slot:start>
+                <div class="my-2">
+                    <Button label="Novo" icon="pi pi-plus" class="p-button-success mr-2" @click="create" />
+                </div>
+            </template>
+        </Toolbar>
+        <DataTable_offer :data="offer_data" @remove="handleRemove" @edit="edit"></DataTable_offer>
+        <Toast />
 
-        <div class="box">
-            <ListDefault_product_category :data="product_category_data"></ListDefault_product_category>
-        </div>
+        <Dialog v-model:visible="dialog" :style="{ width: '450px' }" :header="modalTitle" :modal="true">
+            <div class="flex align-items-center justify-content-center">
+                <Form_offer :formAction="formAction" :record="offer" @saved="onSaved"></Form_offer>
+            </div>
+            <template #footer> </template>
+        </Dialog>
+        <Dialog v-model:visible="deleteDialog" :style="{ width: '450px' }" header="Confirmar" :modal="true">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span v-if="offer"
+                    >Tem certeza que quer excluir <b>{{ offer.name }}</b
+                    >?</span
+                >
+            </div>
+            <template #footer>
+                <Button label="Não" icon="pi pi-times" class="p-button-text" @click="deleteDialog = false" />
+                <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="remove(offer.id)" />
+            </template>
+        </Dialog>
     </div>
 </template>
+
 <script>
+import axios from 'axios';
 import { useAppStore } from '@/store/store.js';
-import Modal from '@/components/modal/Modal.vue';
-import ListDefault_offer from '@/components/offer/ListDefault.vue';
-import Form_offer from '@/components/offer/FormDefault.vue';
+import DataTable_offer from '../../components/offer/DataTable.vue';
+import Form_offer from '../../components/offer/Form.vue';
+import { useToast } from 'primevue/usetoast';
 
 export default {
-    name: 'CrudDefault',
-    components: { Modal, ListDefault_offer, Form_offer },
     data() {
         return {
-            id_product_category_data: null,
-            formattedDate: '',
-            x: ''
+            dialog: false,
+            objectLabel: 'Promoção',
+            deleteDialog: false,
+            modalTitle: '',
+            formAction: "POST",
+            offer: null,
+            toast: useToast()
         };
     },
-    mounted() {},
+    components: { DataTable_offer, Form_offer },
+    created() {
+        const store = useAppStore();
+        store.get_offer();
+    },
     computed: {
         offer_data() {
             const store = useAppStore();
@@ -41,36 +64,57 @@ export default {
         }
     },
     methods: {
-        openModal() {
-            this.$refs.modal.openModal();
+        openNew() {
+            this.dialog = true;
         },
-        closeModal() {
-            this.$refs.modal.closeModal();
+        create() {
+            this.dialog = true;
+            this.modalTitle = `Cadastrar ${this.objectLabel}`;
+            this.formAction = "POST",
+            this.offer =null
         },
-        edit(id) {
-            console.log('editando o item de id:', id);
-        },
-        remove(id) {
-            console.log('excluindo o item de id:', id);
-            this.$refs.remove.openModal();
-        },
-        async get_offer() {
-            const store = useAppStore();
+        edit(value) {
+            this.dialog = true;
+            this.modalTitle = `Editar ${this.objectLabel}`;
+            this.formAction = "PATCH",
+            this.offer = value;
 
-            const params = {
-                $limit: 1000
+        },
+        async remove(id) {
+            let url = `${BASE_API_URL}/offer/${id}`;
+
+            this.isLoading = true;
+
+            const config = {
+                method: 'DELETE',
+                url: url
             };
-            if (this.id_product_category_data != 0) {
-                params.id_product_category = this.id_product_category_data;
-            }
-            store.get_offer(params);
+            await axios(config)
+                .then((response) => {
+                    console.log(response);
+                    this.toast.add({ severity: 'success', summary: 'Sucesso', detail: `${this.objectLabel} removido com sucesso!`, life: 3000 });
+                    this.deleteDialog = false;
+                    const store = useAppStore();
+                    store.get_offer();
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                });
+        },
+        handleRemove(value) {
+            this.deleteDialog = true;
+            this.modalTitle = `Deletar ${this.objectLabel}`;
+            this.offer = value;
+        },
+        onSaved() {
+            const store = useAppStore();
+            store.get_offer();
+            this.toast.add({ severity: 'success', summary: 'Sucesso', detail: `Cadastro de ${this.objectLabel} realizado com sucesso!`, life: 3000 });
+            this.dialog = false;
         }
     }
 };
 </script>
-<style scoped lang="scss">
-.box-button {
-    display: flex;
-    justify-content: end;
-}
-</style>
