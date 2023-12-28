@@ -1,9 +1,11 @@
 <script>
 import ProductService from '@/service/ProductService';
+import { useAppStore } from '@/store/store.js';
 
 export default {
     data() {
         return {
+            cart: [],
             sidebar: false,
             dataviewValue: null,
             layout: 'grid',
@@ -47,10 +49,7 @@ export default {
                     <i class="pi pi-shopping-cart cursor-pointer" style="font-size: 2rem" @click="sidebar = true"></i>
                 </div>
                 <Sidebar v-model:visible="sidebar" header="Right Sidebar" position="right">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat.
-                    </p>
+                    <pre>{{ cart }}</pre>
                 </Sidebar>
                 <DataView :value="dataviewValue" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
                     <template #header>
@@ -103,7 +102,7 @@ export default {
                                 </div>
                                 <div class="flex align-items-center justify-content-between">
                                     <span class="text-2xl font-semibold">${{ slotProps.data.price }}</span>
-                                    <Button icon="pi pi-shopping-cart" :disabled="slotProps.data.inventoryStatus === 'OUTOFSTOCK'"></Button>
+                                    <Button icon="pi pi-shopping-cart" :disabled="slotProps.data.inventoryStatus === 'OUTOFSTOCK'" @click="() => cart.push(slotProps.data)"></Button>
                                 </div>
                             </div>
                         </div>
