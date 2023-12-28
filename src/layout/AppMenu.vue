@@ -27,6 +27,13 @@ const model = ref([
             { label: 'Meu Catálogo', icon: 'pi pi-fw pi-id-card', to: '/choppin/product' },
             { label: 'Configurações', icon: 'pi pi-fw pi-id-card', to: '/choppin/settings' }
         ]
+    },
+    {
+        label: 'Loja',
+        items: [
+            { label: 'Market', icon: 'pi pi-fw pi-list', to: '/choppin/customer/product_list' },
+            { label: 'Cart', icon: 'pi pi-fw pi-shopping-cart', to: '/choppin/customer/cart' }
+        ]
     }
     /*
     {
