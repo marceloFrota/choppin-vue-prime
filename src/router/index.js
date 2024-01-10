@@ -88,7 +88,16 @@ const router = createRouter({
                     name: 'choppinorderdetails',
                     component: () => import('@/views/choppin/OrderDetails.vue')
                 },
-
+                {
+                    path: '/choppin/customer/product_list',
+                    name: 'choppincustomerproductlist',
+                    component: () => import('@/views/choppin/customer/ProductList.vue')
+                },
+                {
+                    path: '/choppin/customer/cart',
+                    name: 'choppincustomercart',
+                    component: () => import('@/views/choppin/customer/Cart.vue')
+                },
                 {
                     path: '/choppin/fileuploadsimple',
                     name: 'choppinfileuploadsimple',

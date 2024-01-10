@@ -14,7 +14,8 @@ export const useAppStore = defineStore('app', {
         order_status_data: null,
         product_subcategory_data: null,
         stock_data: null,
-        offer_data: null
+        offer_data: null,
+        cart: []
     }),
     actions: {
         async get_partner(params = {}) {
