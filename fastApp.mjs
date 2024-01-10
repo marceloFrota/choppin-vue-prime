@@ -3,50 +3,91 @@ import fs from 'fs';
 import axios from 'axios';
 
 
-const files = {
-  routes:{
-    ext: "js"  
+const app = {
+  id: 10,
+  name: 'choppin'
+}
+
+const files = [
+  {
+    name: 'routes',
+    templateName: 'routes',
+    ext: 'js',
+    scope: 'app'
   },
-  form: {
-    ext : "vue"
-  }
-};
+  {
+    name: 'store',
+    templateName: 'pinia',
+    ext: 'js',
+    scope: 'app'
+  },
+  {
+    name: 'Form',
+    templateName: 'primevue_form',
+    ext: 'vue',
+    scope: 'object'
+  },
+  {
+    name: 'DataTable',  
+    templateName: 'primevue_datatable',
+    ext: 'vue',
+    scope: 'object'
+  },
+  {
+    name: 'CrudModal',  
+    templateName: 'primevue_crud_dialog',
+    ext: 'vue',
+    scope: 'object'
+  },
+]
 
 
 
 async function main() {
-  const { appName, objectName } = await inquirer.prompt([
+  const { command } = await inquirer.prompt([
     {
       type: 'input',
-      name: 'appName',
-      message: 'Enter the name of the app:',
-    },
-    {
-      type: 'input',
-      name: 'objectName',
-      message: 'Enter the name of the object:',
+      name: 'command',
+      message: 'Would you like to generate files:',
     },
   ]);
 
-  
-  
-  const code = await getCode(appName, objectName);
-  console.log(code);
-  if (code) {
-    // Write the code to a file using the filename logic you choose
-    await fs.promises.writeFile(objectName, code);
-    console.log(`Successfully wrote code for ${appName}:${objectName}`);
-  } else {
-    console.error('Failed to retrieve code.');
+  if (command.toLowerCase() === 'yes') {
+    const appName = app.name;
+    const response = await getObjects();
+    const objects = response.data;
+
+    const appFiles= files.filter(file => file.scope === 'app');
+    appFiles.forEach(async (fileTemplate) => {
+      const code = await getCode(appName, objects[0].name, fileTemplate.templateName);
+      const dir = `generated/${appName}`;
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(`${dir}/${fileTemplate.name}.${fileTemplate.ext}`, code);
+      console.log(`Successfully wrote code for ${appName}:${fileTemplate.name}`);
+    });
+
+    const objectFiles= files.filter(file => file.scope === 'object');
+    objects.forEach(async (obj) => {
+      objectFiles.forEach(async (fileTemplate) => {
+        const code = await getCode(appName, obj.name, fileTemplate.templateName);
+        const dir = `generated/${appName}/${obj.name}`;
+        fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(`${dir}/${fileTemplate.name}.${fileTemplate.ext}`, code);
+        console.log(`Successfully wrote code for ${appName}:${obj.name}:${fileTemplate.name}`);
+      });
+    });
   }
-  
-  
 }
 
 
-async function getCode(appName, objectName) {
+async function getObjects() {
+  const { data: objects } = await axios.get(`https://node.fastapp.cloud/object?app=${app.id}`);
+  return objects;
+}
+
+async function getCode(appName, objectName, templateName) {
   // Construct API URL based on app and object names
-  const url = `https://laravel.fastapp.cloud/api/fastapp/code/${appName}/${objectName}/routes`;
+  const url = `https://laravel.fastapp.cloud/api/fastapp/code/${appName}/${objectName}/${templateName}`;
 
   try {
     // Make API call using Axios
@@ -66,6 +107,33 @@ async function getCode(appName, objectName) {
     console.error(`Error fetching code: ${error.message}`);
     return null; // Indicate unsuccessful retrieval
   }
+}
+
+
+function getFileName(appName, objectName) {
+  // Construct filename based on app and object names
+  return `${appName}_${objectName}.${files.routes.ext}`;
+}
+
+function getFilePath(appName, objectName) {
+  // Construct filepath based on app and object names
+  return `${appName}/${objectName}.${files.routes.ext}`;
+}
+
+
+async function writeFile(appName, objectName) {
+  // get and write code for each file
+  for (const file of files) {
+    const code = await getCode(appName, objectName, file.name);
+    if (code) {
+      // Write the code to a file using the filename logic you choose
+      await fs.promises.writeFile(getFilePath(appName, objectName, file.name), code);
+      console.log(`Successfully wrote code for ${appName}:${objectName}`);
+    } else {
+      console.error('Failed to retrieve code.');
+    }
+  }
+  
 }
 
 main();
