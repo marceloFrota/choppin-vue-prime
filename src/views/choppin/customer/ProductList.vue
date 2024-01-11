@@ -14,7 +14,9 @@ export default {
             sortField: null,
             sortOptions: [
                 { label: 'Price High to Low', value: '!price' },
-                { label: 'Price Low to High', value: 'price' }
+                { label: 'Price Low to High', value: 'price' },
+                { label: 'Category A to Z', value: 'category' },
+                { label: 'Category Z to A', value: '!category' }
             ]
         };
     },
