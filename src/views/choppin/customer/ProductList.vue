@@ -1,6 +1,6 @@
 <script>
 import ProductService from '@/service/ProductService';
-import { useAppStore } from '@/store/store.js';
+//import { useAppStore } from '@/store/store.js';
 
 export default {
     data() {
@@ -9,12 +9,15 @@ export default {
             sidebar: false,
             dataviewValue: null,
             layout: 'grid',
-            sortKey: null,
+            sortKeyPrice: null,
+            sortKeyCategory: null,
             sortOrder: null,
             sortField: null,
-            sortOptions: [
-                { label: 'Price High to Low', value: '!price' },
+            sortOptionsByPrice: [
                 { label: 'Price Low to High', value: 'price' },
+                { label: 'Price High to Low', value: '!price' }
+            ],
+            sortOptionsByCategory: [
                 { label: 'Category A to Z', value: 'category' },
                 { label: 'Category Z to A', value: '!category' }
             ]
@@ -27,6 +30,22 @@ export default {
         });
     },
     methods: {
+        applySorting() {
+            if (!this.sortField) return;
+
+            const compare = (a, b) => {
+                let valueA = a[this.sortField];
+                let valueB = b[this.sortField];
+
+                if (typeof valueA === 'string') valueA = valueA.toLowerCase();
+                if (typeof valueB === 'string') valueB = valueB.toLowerCase();
+
+                if (valueA < valueB) return -1 * this.sortOrder;
+                if (valueA > valueB) return 1 * this.sortOrder;
+                return 0;
+            };
+            this.dataviewValue.sort(compare);
+        },
         onSortChange(event) {
             const value = event.value.value;
             if (value.indexOf('!') === 0) {
@@ -36,7 +55,18 @@ export default {
                 this.sortOrder = 1;
                 this.sortField = value;
             }
-            this.sortKey = event.value;
+
+            // Check which dropdown triggered the change
+            if (this.sortOptionsByPrice.map((option) => option.value).includes(value)) {
+                this.sortKeyPrice = event.value;
+                this.sortKeyCategory = null; // Reset the other filter
+            } else if (this.sortOptionsByCategory.map((option) => option.value).includes(value)) {
+                this.sortKeyCategory = event.value;
+                this.sortKeyPrice = null; // Reset the other filter
+            }
+
+            // Apply the sorting logic
+            this.applySorting();
         }
     }
 };
@@ -57,7 +87,8 @@ export default {
                     <template #header>
                         <div class="grid grid-nogutter">
                             <div class="col-6 text-left">
-                                <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)" />
+                                <Dropdown class="mr-2" v-model="sortKeyPrice" :options="sortOptionsByPrice" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)" />
+                                <Dropdown v-model="sortKeyCategory" :options="sortOptionsByCategory" optionLabel="label" placeholder="Sort By Category" @change="onSortChange($event)" />
                             </div>
                             <div class="col-6 text-right">
                                 <DataViewLayoutOptions v-model="layout" />
