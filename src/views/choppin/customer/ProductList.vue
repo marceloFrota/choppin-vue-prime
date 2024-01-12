@@ -48,7 +48,47 @@ export default {
                     <h5>DataView</h5>
                     <i class="pi pi-shopping-cart cursor-pointer" style="font-size: 2rem" @click="sidebar = true"></i>
                 </div>
-                <Sidebar v-model:visible="sidebar" header="Right Sidebar" position="right">
+                <Sidebar v-model:visible="sidebar" header="Right Sidebar" class="w-full md:w-20rem lg:w-30rem" position="right">
+                    <div class="p-col">
+                        <h2>Meu Carrinho</h2>
+                        oioi
+                        <DataView :value="cart">
+                            <template #list="slotProps">
+                              <div class="grid grid-nogutter">
+                                <div v-for="(item, index) in cart" :key="index" class="col-12">
+                                  <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4" :class="{ 'border-top-1 surface-border': index !== 0 }">
+                                    <img class="w-9 sm:w-16rem xl:w-5rem shadow-2 block xl:block mx-auto border-round" :src="`https://primefaces.org/cdn/primevue/images/product/${item.image}`" :alt="item.name" />
+                                    <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                                      <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                                        <div class="text-2xl font-bold text-900">{{ item.name }}</div>
+                                        <div class="flex align-items-center gap-3">
+                                          <span class="flex align-items-center gap-2">
+                                            <i class="pi pi-tag"></i>
+                                            <span class="font-semibold">{{ item.category }}</span>
+                                          </span>
+                                        
+                                        </div>
+                                        <div class="align-items-center">
+                                            <Button icon="pi pi-minus" @click="decreaseQuantity(index)" :disabled="item.quantity === 1"></Button>
+                                            <span>{{ item.quantity }}</span>
+                                            <Button icon="pi pi-plus" @click="increaseQuantity(index)"></Button>
+                                          </div>
+                                      </div>
+                                      
+                                      <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                                        <span class="text-2xl font-semibold">${{ item.price }}</span>
+                                        <div class="flex align-items-center gap-2">
+                                         
+                                          <Button icon="pi pi-trash" class="p-button-danger" @click="removeFromCart(index)"></Button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </template>
+                          </DataView>
+                    </div>
                     <pre>{{ cart }}</pre>
                 </Sidebar>
                 <DataView :value="dataviewValue" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
