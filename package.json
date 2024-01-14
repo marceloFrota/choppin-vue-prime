@@ -2,7 +2,7 @@
     "name": "sakai-vue",
     "version": "3.8.0",
     "scripts": {
-        "dev": "vite",
+        "dev": "node fastapp.mjs && vite",
         "build": "vite build",
         "preview": "vite preview",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"

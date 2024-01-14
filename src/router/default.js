@@ -72,21 +72,6 @@ export default [
         component: () => import('@/components/order/CrudModal.vue')
     },
     {
-        path: 'choppin/order_item',
-        name: 'choppinorder_item',
-        component: () => import('@/components/order_item/CrudModal.vue')
-    },
-    {
-        path: 'choppin/cart_item',
-        name: 'choppincart_item',
-        component: () => import('@/components/cart_item/CrudModal.vue')
-    },
-    {
-        path: 'choppin/order_status',
-        name: 'choppinorder_status',
-        component: () => import('@/components/order_status/CrudModal.vue')
-    },
-    {
         path: 'choppin/product_subcategory',
         name: 'choppinproduct_subcategory',
         component: () => import('@/components/product_subcategory/CrudModal.vue')
